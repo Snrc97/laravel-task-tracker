@@ -7,28 +7,28 @@ use Illuminate\Http\Request;
 class DashboardController extends WebControllerBase
 {
 
-    public function index()
+    public function index(Request $request, ...$params = [])
     {
-        return view('vendor.Snrc97.pages.dashboard.index');
+        return view('vendor.Snrc97.pages.dashboard.index', compact('params'));
     }
 
-    public function register()
+    public function register(Request $request, ...$params = [])
     {
         return view('vendor.Snrc97.pages.register.index');
     }
 
-    public function login()
+    public function login(Request $request, ...$params = [])
     {
         return view('vendor.Snrc97.pages.login.index');
     }
 
-    public function projects()
+    public function projects(Request $request, ...$params = [])
     {
-        return view('vendor.Snrc97.pages.projects.index');
+        return view('vendor.Snrc97.pages.projects.index', compact('params'));
     }
 
-    public function tasks()
+    public function tasks(Request $request, ...$params = [])
     {
-        return view('vendor.Snrc97.pages.tasks.index');
+        return view('vendor.Snrc97.pages.tasks.index', compact('params'));
     }
 }

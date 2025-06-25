@@ -56,6 +56,8 @@ $color_2: #fff;
 }
 .sidebar-nav {
 	position: absolute;
+    display: flex;
+    flex-direction: column;
 	top: 0;
 	width: 250px;
 	margin: 0;
@@ -63,6 +65,7 @@ $color_2: #fff;
 	list-style: none;
 	margin-top: 2px;
 	li {
+
 		text-indent: 15px;
 		line-height: 40px;
 		a {

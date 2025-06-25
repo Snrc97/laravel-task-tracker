@@ -21,6 +21,8 @@ return [
     'invalid_creditentials' => 'Geçersiz giriş bilgileri.',
     'logout_success' => 'Çıkış başarılı.',
 
+    'email_label' => 'E-posta',
+    'password_label' => 'Şifre',
     'login' => 'Giriş Yap',
     'register' => 'Kayıt Ol',
     'forgot_your_password' => 'Şifreni mi unuttun?',

@@ -13,8 +13,12 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Bu giriş bilgileri kayıtlarımızla eşleşmiyor. Sebep: :reason',
+    'password' => 'Şifre yanlış.',
+    'throttle' => 'Çok fazla giriş denemesi. Lütfen :seconds saniye sonra tekrar deneyin.',
+    'invalid_token' => 'Token geçersiz.',
+    'token_not_provided' => 'Token gerekli.',
+    'invalid_creditentials' => 'Geçersiz giriş bilgileri.',
+    'logout_success' => 'Çıkış başarılı.',
 
 ];

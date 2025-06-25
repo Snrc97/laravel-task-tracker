@@ -14,7 +14,7 @@
 </table>
 
 @push('modals')
-    @include('vendor.Snrc97.includes.modals.index', ['title' => $title, 'inputs' => $columns])
+    @include('vendor.Snrc97.includes.modals.index', ['title' => $title, 'inputs' => $columns, 'url' => $ajax ?? null])
 @endpush
 
 @push('scripts')
@@ -33,7 +33,7 @@
                         @endif
                         @if (isset($column['render']))
                             , render: (data, type, row, meta) => {
-                                let rendit = '{!! $column['render'] !!}';
+                                let rendit = '{!! $column['render'] ?? "" !!}';
 
                                 return '<div align="center">' + rendit + '</div>';
                             }

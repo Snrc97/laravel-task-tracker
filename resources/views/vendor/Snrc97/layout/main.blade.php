@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <div class="progress-circle-container">
+    <div class="progress-circle-container d-none">
         <img class="progress-circle" src="{{ asset('vendor/Snrc97/assets/img/progress-circle.gif') }}"/>
     </div>
     <div class="container">

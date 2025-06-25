@@ -8,20 +8,24 @@ $id ??= $title."Modal";
                 <h5 class="modal-title" id="{{ $id }}Label">{{ $title }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('all.close') }}"></button>
             </div>
-            <form action="{{ $url }}" method="{{ $method }}">
+            <form action="{{ $url }}" method="{{ $method ?? 'POST' }}">
                 @csrf
                 <div class="modal-body">
                     @foreach($inputs as $input)
+                    @php
+                    $label = $input['label'] ?? $input['title'];
+                    $data = $input['name'] ?? $input['data'];
+                    @endphp
                         <div class="mb-3">
-                            <label for="{{ $input['name'] }}" class="form-label">{{ $input['label'] }}</label>
+                            <label for="{{ $data }}" class="form-label">{{ $label }}</label>
                             @if(isset($input['elementType']) && $input['elementType'] === 'select')
-                                <select class="form-select" id="{{ $input['name'] }}" name="{{ $input['name'] }}">
+                                <select class="form-select" id="{{ $data }}" name="{{ $data }}">
                                     @foreach($input['options'] as $key => $value)
-                                        <option value="{{ $key }}" {{ (old($input['name']) ?? $input['value'] ?? '') === $key ? 'selected' : '' }}>{{ $value }}</option>
+                                        <option value="{{ $key }}" {{ (old($data) ?? $input['value'] ?? '') === $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             @else
-                                <input type="{{ $input['type'] ?? 'text' }}" class="form-control" id="{{ $input['name'] }}" name="{{ $input['name'] }}" value="{{ old($input['name']) ?? $input['value'] ?? '' }}">
+                                <input type="{{ $input['type'] ?? 'text' }}" class="form-control" id="{{ $data }}" name="{{ $data }}" value="{{ old($data) ?? $input['value'] ?? '' }}">
                             @endif
                         </div>
                     @endforeach

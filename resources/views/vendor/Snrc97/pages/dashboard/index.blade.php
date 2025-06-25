@@ -9,14 +9,17 @@
                 [
                     'title' => __('all.dashboard.title'),
                     'href' => url('/web/dashboard'),
+                    'icon' => 'fa fa-tachometer fa-stack-1x',
                 ],
                 [
                     'title' => __('all.projects.title'),
                     'href' => url('/web/dashboard/projects'),
+                    'icon' => 'fa fa-wrench fa-stack-1x',
                 ],
                 [
                     'title' => __('all.tasks.title'),
                     'href' => url('/web/dashboard/tasks'),
+                    'icon' => 'fa fa-tasks fa-stack-1x',
                 ],
             ];
         @endphp

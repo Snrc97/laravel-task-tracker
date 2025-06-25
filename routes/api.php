@@ -12,10 +12,10 @@ Route::get('/user', function (Request $request) {
 
 Route::group([
     'prefix' => 'auth',
-    'controller' => AuthenticationController::class,
+    'namespace' => 'App\Http\Controllers\Api',
 ], function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
+    Route::post('login', 'AuthenticationController@login');
+    Route::post('register', 'AuthenticationController@register');
 });
 
 Route::group([

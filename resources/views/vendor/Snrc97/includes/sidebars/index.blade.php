@@ -8,7 +8,7 @@
          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
 <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
 </button>
-         <a class="navbar-brand" href="#"><i class="fa fa-rocket fa-4"></i> M-33</a>
+         <a class="navbar-brand" href="#"><img width="50" height="50" src="{{ asset('vendor/Snrc97/assets/img/logo.png') ?? '' }}"/></i> MYSIS SOFT</a>
       </div>
       <!-- navbar-header-->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -29,7 +29,7 @@
             <li class="{{ ($sidebarItem['active'] ?? '') ? 'active' : '' }}">
                <a href="{{ $sidebarItem['href'] }}">
                   <span class="fa-stack fa-lg pull-left">
-                     <i class="fa {{ $sidebarItem['icon'] ?? '' }} fa-stack-1x "></i>
+                     <i class="{{ $sidebarItem['icon'] ?? '' }}"></i>
                   </span>
                   {{ $sidebarItem['title'] }}
                </a>

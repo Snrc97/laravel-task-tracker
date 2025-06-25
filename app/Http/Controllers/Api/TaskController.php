@@ -22,7 +22,7 @@ class TaskController extends ApiControllerBase
     public function index(Request $request): JsonResponse
     {
         $data = $this->model->all();
-        return $this->apiResponse(data: $data);
+        return apiResponse(data: $data);
     }
 
     /**
@@ -34,7 +34,7 @@ class TaskController extends ApiControllerBase
     public function store(Request $request): JsonResponse
     {
         $data = $this->model->create($request->all());
-        return $this->apiResponse(data: $data, status: 201);
+        return apiResponse(data: $data, status: 201);
     }
 
     /**
@@ -47,7 +47,7 @@ class TaskController extends ApiControllerBase
     public function show(Request $request, $id): JsonResponse
     {
         $data = $this->model->find($id);
-        return $this->apiResponse(data: $data);
+        return apiResponse(data: $data);
     }
 
     /**
@@ -60,7 +60,7 @@ class TaskController extends ApiControllerBase
     public function update(Request $request, $id): JsonResponse
     {
         $data = $this->model->where('id', $id)->update($request->all());
-        return $this->apiResponse(data: $data);
+        return apiResponse(data: $data);
     }
 
     /**
@@ -73,6 +73,6 @@ class TaskController extends ApiControllerBase
     public function destroy(Request $request, $id): JsonResponse
     {
         $data = $this->model->where('id', $id)->delete();
-        return $this->apiResponse(data: $data, status: 204);
+        return apiResponse(data: $data, status: 204);
     }
 }

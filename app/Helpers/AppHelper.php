@@ -16,6 +16,7 @@ function apiResponse($data = null, $status = 200, $message = null): JsonResponse
 
 function withValidation(Request $request, $rules, callable $next): JsonResponse
 {
+    $errors = null;
     try {
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {

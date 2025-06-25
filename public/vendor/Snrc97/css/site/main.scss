@@ -22,5 +22,19 @@ body {
         height: inherit;
     }
 
+    .progress-circle-container {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .progress-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 200px;
+            background-image: conic-gradient(#FDFDFC 0%, #FDFDFC 50%, #EDEDEC 50%, #EDEDEC 100%);
+
+        }
+
+    }
 }
 

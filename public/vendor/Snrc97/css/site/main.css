@@ -18,4 +18,16 @@ body .container {
 body .container-fluid {
   width: inherit;
   height: inherit;
+}
+body .progress-circle-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .progress-circle-container .progress-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 200px;
+  background-image: conic-gradient(#FDFDFC 0%, #FDFDFC 50%, #EDEDEC 50%, #EDEDEC 100%);
 }/*# sourceMappingURL=main.css.map */

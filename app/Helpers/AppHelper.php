@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\UserModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -45,4 +46,13 @@ function withValidation(Request $request, $rules, callable $next): JsonResponse
 
         return $next($validatedData);
     }
+}
+
+/**
+ *
+ * @return UserModel|null
+ */
+function getUser()
+{
+    return auth()?->user()?->getModel() ?? null;
 }

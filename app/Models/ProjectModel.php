@@ -4,6 +4,7 @@ namespace App\Models;
 
 class ProjectModel extends ModelBase
 {
+    protected $table = 'projects';
     protected $fillable = [
         'user_id',
         'name'

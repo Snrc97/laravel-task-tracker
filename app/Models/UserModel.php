@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class UserModel extends AuthenticableModelBase
 {
 
+    protected $table = 'users';
 
   /**
    * The attributes that are mass assignable.

@@ -4,6 +4,8 @@ namespace App\Models;
 
 class TaskModel extends ModelBase
 {
+    protected $table = 'tasks';
+
     protected $fillable = [
         'project_id',
         'title',

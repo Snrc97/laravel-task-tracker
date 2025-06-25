@@ -1,3 +1,6 @@
+@php
+$id ??= $title."Modal";
+@endphp
 <div class="modal fade" id="{{ $id }}" tabindex="-1" aria-labelledby="{{ $id }}Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

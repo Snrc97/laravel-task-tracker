@@ -12,11 +12,11 @@
                 ],
                 [
                     'title' => __('all.projects.title'),
-                    'href' => url('/web/projects'),
+                    'href' => url('/web/dashboard/projects'),
                 ],
                 [
                     'title' => __('all.tasks.title'),
-                    'href' => url('/web/tasks'),
+                    'href' => url('/web/dashboard/tasks'),
                 ],
             ];
         @endphp

@@ -1,5 +1,5 @@
 @extends('vendor.Snrc97.layout.main', ['title' => $title ?? __('all.dashboard.title')])
-@push('links')
+@push('styles')
 @endpush
 
 @section('content')
@@ -20,7 +20,7 @@
                 ],
             ];
         @endphp
-        @include('vendor/Snrc97/includes/sidebar/index', compact('sidebarItems'))
+        @include('vendor/Snrc97/includes/sidebar/index', ['sidebarItems' => $sidebarItems])
         @yield('dashboard-content')
     </div>
 @endsection

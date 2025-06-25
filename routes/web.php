@@ -19,7 +19,7 @@ Route::group([
         return $controller->{$action}($request, $params);
     })
     ->where('params', '.*');
-});
+})->middleware('auth:sanctum');
 
 
 

@@ -20,10 +20,9 @@ Route::group([
 
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => 'auth_token',
 ], function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('tasks', TaskController::class);
-});
+})->middleware('auth_token');
 
 

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\TaskModel;
 use App\Repositories\TaskRepository;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends ApiControllerBase
 {
+    use AuthorizesRequests;
     protected TaskRepository $taskRepository;
     function __construct(TaskRepository $taskRepository)
     {
@@ -23,8 +27,9 @@ class TaskController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
-        $data = $this->taskRepository->all();
-        return apiResponse(data: $data);
+        $collection = $this->taskRepository->all();
+        $collection = $this->authorize('authorizeCollection', [auth()->user(), $collection]);
+        return apiResponse(data: $collection->toArray());
     }
 
     /**
@@ -35,8 +40,11 @@ class TaskController extends ApiControllerBase
      */
     public function store(Request $request): JsonResponse
     {
-        $data = $this->taskRepository->create($request->all());
-        return apiResponse(data: $data, status: 201);
+        $validatedData = $request->validate(TaskModel::rules());
+        $model = $this->taskRepository->create($validatedData);
+        $this->authorize('authorize', [auth()->user(), $model]);
+
+        return apiResponse(data: $model, status: 201);
     }
 
     /**
@@ -48,8 +56,9 @@ class TaskController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-        $data = $this->taskRepository->find($id);
-        return apiResponse(data: $data);
+        $model = $this->taskRepository->find($id);
+        $this->authorize('authorize', [auth()->user(), $model]);
+        return apiResponse(data: $model);
     }
 
     /**
@@ -61,8 +70,11 @@ class TaskController extends ApiControllerBase
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $data = $this->taskRepository->find($id)->update($request->all());
-        return apiResponse(data: $data);
+        $validatedData = $request->validate(TaskModel::rules());
+        $model = $this->taskRepository->find($id);
+        $this->authorize('authorize', [auth()->user(), $model]);
+        $model = $model->update($validatedData);
+        return apiResponse(data: $model);
     }
 
     /**
@@ -74,6 +86,9 @@ class TaskController extends ApiControllerBase
      */
     public function destroy(Request $request, $id): JsonResponse
     {
+        $model = $this->taskRepository->find($id);
+        $this->authorize('authorize', [auth()->user(), $model]);
+
         $data = $this->taskRepository->delete($id);
         return apiResponse(data: $data, status: 204);
     }

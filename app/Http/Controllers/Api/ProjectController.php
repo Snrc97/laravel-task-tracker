@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\ModelBase;
+use App\Models\ProjectModel;
 use App\Repositories\ProjectRepository;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends ApiControllerBase
 {
+    use AuthorizesRequests;
 
     protected ProjectRepository $projectRepository;
     function __construct(ProjectRepository $projectRepository)
@@ -24,8 +28,9 @@ class ProjectController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
-        $data = $this->projectRepository->all();
-        return apiResponse(data: $data);
+        $collection = $this->projectRepository->all();
+        $collection = $this->authorize('authorizeCollection', [auth()->user(), $collection]);
+        return apiResponse(data: $collection->toArray());
     }
 
     /**
@@ -36,8 +41,10 @@ class ProjectController extends ApiControllerBase
      */
     public function store(Request $request): JsonResponse
     {
-        $data = $this->projectRepository->create($request->all());
-        return apiResponse(data: $data, status: 201);
+        $validatedData = $request->validate(ProjectModel::rules());
+        $model = $this->projectRepository->create($validatedData);
+        $this->authorize('authorize', [auth()->user(), $model]);
+        return apiResponse(data: $model, status: 201);
     }
 
     /**
@@ -49,8 +56,10 @@ class ProjectController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-        $data = $this->projectRepository->find($id);
-        return apiResponse(data: $data);
+
+        $model = $this->projectRepository->find($id);
+        $this->authorize('authorize', [auth()->user(), $model]);
+        return apiResponse(data: $model);
     }
 
     /**
@@ -62,8 +71,14 @@ class ProjectController extends ApiControllerBase
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $data = $this->projectRepository->find($id)->update($request->all());
-        return apiResponse(data: $data);
+        $validatedData = $request->validate(ProjectModel::rules());
+        /**
+         * @var ModelBase $model
+         */
+        $model = $this->projectRepository->find($id);
+        $this->authorize('authorize', [auth()->user(), $model]);
+        $model = $model->update($validatedData);
+        return apiResponse(data: $model);
     }
 
     /**
@@ -75,6 +90,7 @@ class ProjectController extends ApiControllerBase
      */
     public function destroy(Request $request, $id): JsonResponse
     {
+        $this->authorize('authorize', [auth()->user(), $this->model]);
         $data = $this->projectRepository->delete($id);
         return apiResponse(data: $data, status: 204);
     }

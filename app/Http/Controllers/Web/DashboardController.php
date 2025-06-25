@@ -24,11 +24,11 @@ class DashboardController extends WebControllerBase
 
     public function projects(Request $request, $params = null )
     {
-        return view('vendor.Snrc97.pages.projects.index', ['params' => $params]);
+        return view('vendor.Snrc97.pages.dashboard.projects.index', ['params' => $params]);
     }
 
     public function tasks(Request $request, $params = null)
     {
-        return view('vendor.Snrc97.pages.tasks.index', ['params' => $params]);
+        return view('vendor.Snrc97.pages.dashboard.tasks.index', ['params' => $params]);
     }
 }

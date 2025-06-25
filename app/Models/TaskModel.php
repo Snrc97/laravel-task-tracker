@@ -11,11 +11,14 @@ class TaskModel extends ModelBase
 
     ];
 
-    protected $casts = [
-        'project_id' => 'integer',
-        'title' => 'string',
-        'status' => 'string',
-    ];
+    public function casts(): array
+    {
+        return [
+            'project_id' => 'integer',
+            'title' => 'string',
+            'status' => 'string',
+        ];
+    }
 
     public static function rules(): array
     {

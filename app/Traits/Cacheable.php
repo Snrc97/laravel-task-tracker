@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait Cacheable
 {
-    public $cacheEnabled = true;
+    public $cacheEnabled = false;
     public function withCache(string $cacheKey, callable $next, $ttl = 5)
     {
         $data = null;

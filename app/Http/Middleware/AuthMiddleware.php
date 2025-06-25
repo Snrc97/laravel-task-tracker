@@ -17,18 +17,28 @@ class AuthMiddleware
     {
         $token = $request->header('Authorization');
         if (empty($token)) {
-            return response()->json(['error' => __('auth.failed', ['reason' => __('auth.token_not_provided')])], 401);
+            return apiResponse(
+                message: __('auth.failed', ['reason' => __('auth.token_not_provided')]),
+                status: 401
+            );
         }
         $result = false;
 
         try {
             $result = auth()->validate(['token' => $token]);
         } catch (\Exception $e) {
-            return response()->json(['error' => __('auth.failed', ['reason' => $e->getMessage()])], 401);
+            return apiResponse(
+                message:__('auth.failed', ['reason' => $e->getMessage()]),
+                status: 401
+            );
+
         }
         finally {
             if (!$result) {
-                return response()->json(['error' => __('auth.failed', ['reason' => __('auth.invalid_token')])], 401);
+                return apiResponse(
+                    message: __('auth.failed', ['reason' => __('auth.invalid_token')]),
+                    status: 401
+                );
             }
 
             return $next($request);

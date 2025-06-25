@@ -2,7 +2,7 @@
 
 use Illuminate\Http\JsonResponse;
 
-function apiResponse($data, $status = 200, $message = null): JsonResponse
+function apiResponse($data = null, $status = 200, $message = null): JsonResponse
 {
     $data = [
         'data' => $data,

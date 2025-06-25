@@ -8,6 +8,8 @@ use App\Policies\ProjectPolicy;
 use App\Policies\TaskPolicy;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Sanctum\Sanctum;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
         $this->registerPolicies();
     }
 }

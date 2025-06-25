@@ -11,6 +11,9 @@ session()->start();
     <title>
         {{ $title }}
     </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <link href="{{ asset('vendor/Snrc97/css/site/main.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/Snrc97/css/datatable/main.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/Snrc97/css/modal/main.css') }}" rel="stylesheet">
@@ -25,13 +28,12 @@ session()->start();
 
 
 
-
     @stack('styles')
 </head>
 
 <body>
     <div class="progress-circle-container">
-        <img class="progress-circle" src="{{ asset('vendor/Snrc97/img/progress-circle.gif') }}"/>
+        <img class="progress-circle" src="{{ asset('vendor/Snrc97/assets/img/progress-circle.gif') }}"/>
     </div>
     <div class="container">
         @yield ('header')

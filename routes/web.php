@@ -11,7 +11,6 @@ Route::get('/', function (Request $request) {
 
 Route::group([
 'prefix' => 'web',
-    'middleware' => 'authenticate_session',
     'controller' => DashboardController::class
 ], function() {
     Route::get('dashboard/{action?}/{params?}', function( Request $request, $action = 'index', $params = null) {
@@ -19,7 +18,8 @@ Route::group([
         return $controller->{$action}($request, $params);
     })
     ->where('params', '.*');
-})->middleware('auth:sanctum');
+})
+;
 
 
 

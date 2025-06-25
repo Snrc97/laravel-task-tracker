@@ -15,8 +15,9 @@ Route::group([
     'prefix' => 'auth',
     'namespace' => 'App\Http\Controllers\Api',
 ], function () {
-    Route::post('login', 'AuthenticationController@login');
-    Route::post('register', 'AuthenticationController@register');
+    Route::post('login', 'AuthenticationController@login')->name('api.login');
+    Route::post('register', 'AuthenticationController@register')->name('api.register');
+    Route::post('logout', 'AuthenticationController@logout')->name('api.logout');
 });
 
 Route::group([

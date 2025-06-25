@@ -25,4 +25,14 @@ class ProjectModel extends ModelBase
             'name' => 'required|string|max:255',
         ];
     }
+
+    public function user()
+    {
+        return $this->belongsTo(UserModel::class, 'user_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(TaskModel::class, 'project_id', 'id');
+    }
 }

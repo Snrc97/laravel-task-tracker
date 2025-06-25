@@ -22,6 +22,7 @@ trait Cacheable
         else
         {
             cache()->forget($cacheKey);
+            $data = $next($data);
         }
 
 

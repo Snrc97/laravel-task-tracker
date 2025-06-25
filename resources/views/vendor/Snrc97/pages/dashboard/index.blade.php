@@ -20,7 +20,7 @@
                 ],
             ];
         @endphp
-        @include('vendor/Snrc97/includes/sidebar/index', ['sidebarItems' => $sidebarItems])
+        @include('vendor/Snrc97/includes/sidebars/index', ['sidebarItems' => $sidebarItems])
         @yield('dashboard-content')
     </div>
 @endsection

@@ -13,6 +13,7 @@ abstract class ApiControllerBase extends Controller
      * @var ModelBase
      */
     protected $model;
+
     public function __construct()
     {
         // $this->middleware('auth:api');

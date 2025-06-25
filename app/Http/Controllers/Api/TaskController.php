@@ -30,9 +30,12 @@ class TaskController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $collection = $this->taskRepository->all();
         $collection = $this->taskPolicy->authorizeCollection(getUser(), $collection);
-        return apiResponse(data: $collection->toArray());
+        return apiResponse(data: $collection->toArray(), params: $params);
     }
 
     /**
@@ -59,9 +62,12 @@ class TaskController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $model = $this->taskRepository->find($id);
         $this->taskPolicy->authorize(getUser(), $model);
-        return apiResponse(data: $model);
+        return apiResponse(data: $model, params: $params);
     }
 
     /**

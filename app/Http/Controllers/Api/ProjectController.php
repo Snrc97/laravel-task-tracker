@@ -31,10 +31,12 @@ class ProjectController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
-
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $collection = $this->projectRepository->all();
         $collection = $this->projectPolicy->authorizeCollection(getUser(), $collection);
-        return apiResponse(data: $collection->toArray());
+        return apiResponse(data: $collection->toArray(), params: $params);
     }
 
     /**
@@ -60,10 +62,12 @@ class ProjectController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $model = $this->projectRepository->find($id);
         $this->projectPolicy->authorize(getUser(), $model);
-        return apiResponse(data: $model);
+        return apiResponse(data: $model, params: $params);
     }
 
     /**

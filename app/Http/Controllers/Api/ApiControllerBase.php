@@ -27,8 +27,11 @@ abstract class ApiControllerBase extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $data = $this->model->all();
-        return apiResponse(data: $data);
+        return apiResponse(data: $data, params: $params);
     }
 
     /**
@@ -39,6 +42,7 @@ abstract class ApiControllerBase extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+
         $data = $this->model->create($request->all());
         return apiResponse(data: $data, status: 201);
     }
@@ -52,8 +56,11 @@ abstract class ApiControllerBase extends Controller
      */
     public function show(Request $request, $id): JsonResponse
     {
+        $params = [
+            'draw' => $request->draw ?? 1
+        ];
         $data = $this->model->find($id);
-        return apiResponse(data: $data);
+        return apiResponse(data: $data, params: $params);
     }
 
     /**

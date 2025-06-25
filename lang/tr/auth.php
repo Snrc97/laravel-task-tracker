@@ -21,4 +21,9 @@ return [
     'invalid_creditentials' => 'Geçersiz giriş bilgileri.',
     'logout_success' => 'Çıkış başarılı.',
 
+    'login' => 'Giriş Yap',
+    'register' => 'Kayıt Ol',
+    'forgot_your_password' => 'Şifreni mi unuttun?',
+    'remember_me' => 'Beni hatırla',
+
 ];

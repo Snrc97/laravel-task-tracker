@@ -35,7 +35,18 @@ class AuthenticationController extends ApiControllerBase
 
     public function login(Request $request): JsonResponse
     {
+
+        if(isset($request->password))
+        {
+            $request->merge([
+                'password' => bcrypt($request->password),
+            ]);
+        }
+
         return withValidation($request, UserModel::rules('login'), function ($validatedData) use ($request) {
+
+
+
             if (!auth()->attempt($validatedData)) {
                 return apiResponse(
                     [

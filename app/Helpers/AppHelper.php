@@ -4,10 +4,18 @@ use App\Models\UserModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-function apiResponse($data = null, $status = 200, $message = null): JsonResponse
+function apiResponse($data = null, $status = 200, $message = null, array $params = []): JsonResponse
 {
+    $recordsTotal = count($data);
+    $recordsFiltered = $recordsTotal;
+
     $data = [
-        'data' => $data,
+        'data' => [
+            'records' => $data,
+            'draw' => $params['draw'] ?? 0,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+        ],
         'message' => $message,
         'success' => $status == 200,
         'status' => $status,

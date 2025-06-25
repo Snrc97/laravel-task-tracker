@@ -1,4 +1,10 @@
 function drawDataTable(id, options, customButtons) {
+
+    if(options.dataSrc)
+    {
+        options.dataSrc ??= 'data';
+    }
+
     var defaultOptions = {
         paging: true,
         searching: true,
@@ -17,7 +23,11 @@ function drawDataTable(id, options, customButtons) {
         }, {
             targets: -1,
             data: null,
-            defaultContent: customButtons || '<button class="btn-action">Action</button>'
+            defaultContent: `
+                <button class="btn btn-warning"><i class="fa fa-pen fa-stack-1x"></i>Edit</button>
+                <button class="btn btn-danger"><i class="fa fa-trash fa-stack-1x"></i>Delete</button>
+                ${customButtons || ''}
+            `
         }]
     };
 

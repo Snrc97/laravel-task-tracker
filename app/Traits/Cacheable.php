@@ -8,12 +8,15 @@ trait Cacheable
     public function withCache(string $cacheKey, callable $next, $ttl = 5)
     {
         $data = null;
-        if(!$this->cacheEnabled)
+        if($this->cacheEnabled)
         {
             if (cache()->has($cacheKey)) {
                 $data = cache()->get($cacheKey);
+                $data = json_decode($data);
+
             }
-            cache()->set($cacheKey, $next(), $ttl);
+            $data = json_encode($next($data));
+            cache()->set($cacheKey, $data, $ttl);
         }
         else
         {
@@ -21,7 +24,7 @@ trait Cacheable
         }
 
 
-        return $next($data);
+        return $data;
 
     }
 

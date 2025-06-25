@@ -4,11 +4,15 @@ namespace App\Models;
 
 class ProjectModel extends ModelBase
 {
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'user_id',
+        'name'
+    ];
 
     protected function casts(): array
     {
         return [
+            'user_id' => 'integer',
             'name' => 'string',
         ];
     }
@@ -16,6 +20,7 @@ class ProjectModel extends ModelBase
     public static function rules(): array
     {
         return [
+            'user_id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:255',
         ];
     }

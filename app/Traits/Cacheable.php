@@ -13,10 +13,11 @@ trait Cacheable
             if (cache()->has($cacheKey)) {
                 $data = cache()->get($cacheKey);
                 $data = json_decode($data);
-
+                return $data;
             }
-            $data = json_encode($next($data));
-            cache()->set($cacheKey, $data, $ttl);
+            $data = $next($data);
+            $cached = json_encode($data);
+            cache()->set($cacheKey, $cached, $ttl);
         }
         else
         {

@@ -4,11 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\TaskModel;
 use Illuminate\Http\JsonResponse;
-use App\Models\TaskModel;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Http\Response;
 
 class TaskController extends ApiControllerBase
 {

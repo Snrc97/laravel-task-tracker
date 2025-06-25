@@ -4,16 +4,16 @@
 
 @section('content')
 
-<div class="container-fluid d-flex justify-content-center">
-    <div class="col-md-4">
-        <form method="POST" action="{{ route('login') }}">
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="col-lg-6">
+        <form id="login-form" method="POST" action="javascript:void(0)">
             @csrf
             <div class="mb-3">
-                <label for="email" class="form-label">{{ __('auth.login') }}</label>
+                <label for="email" class="form-label">{{ __('auth.email_label') }}</label>
                 <input id="email" type="email" name="email" required autofocus class="form-control" />
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">{{ __('auth.password') }}</label>
+                <label for="password" class="form-label">{{ __('auth.password_label') }}</label>
                 <input id="password" type="password" name="password" required class="form-control" />
             </div>
             <div class="mb-3 form-check">
@@ -24,7 +24,7 @@
                 <button type="submit" class="btn btn-primary w-100">{{ __('auth.login') }}</button>
             </div>
             <div class="mb-3">
-                <a href="{{ route('password.request') }}" class="text-decoration-none">{{ __('auth.forgot_your_password') }}</a>
+                <a href="#" class="text-decoration-none">{{ __('auth.forgot_your_password') }}</a>
             </div>
         </form>
     </div>
@@ -33,5 +33,32 @@
 @endsection
 
 @push('scripts')
+
+<script type="text/javascript">
+
+async function handleLoginFormSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log("formData", data);
+    let options = {
+        url: "{{ route('api.login') }}",
+        type: 'POST',
+        data: data,
+        successCallback: (xhr) => {
+            localStorage.setItem('access_token', xhr.token);
+            alert(xhr.message);
+            window.location.reload();
+        }
+    }
+    await AjaxRequest(options);
+
+}
+
+$(()=>{
+    $('#login-form').on('submit', (e) => handleLoginFormSubmit(e));
+});
+
+</script>
 @endpush
 

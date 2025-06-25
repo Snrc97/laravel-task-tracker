@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             'App\Repositories\RepositoryInterface',
-            'App\Controllers\ApiControllerBase'
+            'App\Http\Controllers\Api\ApiControllerBase'
         );
         //
     }

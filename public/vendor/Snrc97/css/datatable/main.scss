@@ -1,0 +1,46 @@
+table.dataTable {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+
+    thead th {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 15px;
+        text-align: left;
+    }
+
+    tbody td {
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f1f1f1;
+    }
+
+    .dataTables_filter input {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .dataTables_paginate {
+        padding: 10px;
+    }
+
+    .dataTables_info {
+        padding: 10px;
+        color: #666;
+    }
+
+    .dataTables_length {
+        padding: 10px;
+    }
+
+    .dataTables_length select {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}

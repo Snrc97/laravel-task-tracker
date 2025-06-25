@@ -14,11 +14,17 @@ class DashboardController extends WebControllerBase
 
     public function register(Request $request, $params = null)
     {
+        if(auth()->check()) {
+            return redirect(route('dashboard'));
+        }
         return view('vendor.Snrc97.pages.register.index');
     }
 
     public function login(Request $request, $params = null)
     {
+        if(auth()->check()) {
+            return redirect(route('dashboard'));
+        }
         return view('vendor.Snrc97.pages.login.index');
     }
 

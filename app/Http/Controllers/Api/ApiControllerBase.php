@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ModelBase;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-class ApiControllerBase extends Controller
+abstract class ApiControllerBase extends Controller
 {
     /**
      *
@@ -23,8 +24,71 @@ class ApiControllerBase extends Controller
             'data' => $data,
             'message' => $message,
             'success' => $status == 200,
-            'status' => $status
+            'status' => $status,
         ];
         return response()->json($data, $status);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $data = $this->model->all();
+        return $this->apiResponse(data: $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $data = $this->model->create($request->all());
+        return $this->apiResponse(data: $data, status: 201);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Request $request, $id): JsonResponse
+    {
+        $data = $this->model->find($id);
+        return $this->apiResponse(data: $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id): JsonResponse
+    {
+        $data = $this->model->where('id', $id)->update($request->all());
+        return $this->apiResponse(data: $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Request $request, $id): JsonResponse
+    {
+        $data = $this->model->where('id', $id)->delete();
+        return $this->apiResponse(data: $data, status: 204);
     }
 }

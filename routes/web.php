@@ -7,8 +7,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
+
 Route::group([
-    'prefix' => 'web',
+'prefix' => 'web',
     'middleware' => 'authenticate_session',
     'controller' => DashboardController::class
 ], function() {
@@ -18,3 +22,6 @@ Route::group([
     })
     ->where('params', '.*');
 });
+
+
+

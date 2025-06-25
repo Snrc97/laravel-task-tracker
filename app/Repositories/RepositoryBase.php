@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Traits\Cacheable;
+
 
 
 /**
@@ -11,6 +13,7 @@ namespace App\Repositories;
  */
 abstract class RepositoryBase
 {
+    use Cacheable;
     /**
      * @var TModel
      */
@@ -37,7 +40,10 @@ abstract class RepositoryBase
      */
     public function all()
     {
-        return $this->model->all();
+        return $this->withCache($this->model->getTable(), function ($data) {
+            $data ??= $this->model->all();
+            return $data;
+        });
     }
 
     /**
@@ -46,7 +52,10 @@ abstract class RepositoryBase
      */
     public function find(int $id)
     {
-        return $this->model->find($id);
+        return $this->withCache($this->model->getTable().'_'.$id, function ($data) use($id) {
+            $data ??= $this->model->find($id);
+            return $data;
+        });
     }
 
     /**

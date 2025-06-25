@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Web\DashboardController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('dashboard');
+Route::get('/', function (Request $request) {
+    $controller = new DashboardController();
+        return $controller->index($request);
 });
-
 
 Route::group([
 'prefix' => 'web',

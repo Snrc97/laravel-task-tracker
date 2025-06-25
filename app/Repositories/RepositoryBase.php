@@ -19,6 +19,14 @@ class RepositoryBase implements RepositoryInterface
     protected $model;
 
     /**
+     * @return TModel
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * @param TModel $model
      */
     public function __construct($model)

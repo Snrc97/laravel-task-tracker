@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +21,13 @@ Route::group([
 
 Route::group([
     'prefix' => 'dashboard',
+    'namespace' => 'App\Http\Controllers\Api',
+    'middleware' => 'auth:sanctum',
+
 ], function () {
-    Route::resource('projects', ProjectController::class);
-    Route::resource('tasks', TaskController::class);
-})->middleware('auth_token');
+    Route::resource('projects', 'ProjectController');
+    Route::resource('tasks', 'TaskController');
+})
+;
 
 

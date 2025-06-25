@@ -34,6 +34,7 @@ class AuthMiddleware
 
         }
         finally {
+
             if (!$result) {
                 return apiResponse(
                     message: __('auth.failed', ['reason' => __('auth.invalid_token')]),

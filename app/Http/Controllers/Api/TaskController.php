@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\TaskModel;
+use App\Repositories\TaskRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends ApiControllerBase
 {
-    function __construct()
+    protected TaskRepository $taskRepository;
+    function __construct(TaskRepository $taskRepository)
     {
-        $this->model = new TaskModel();
+        $this->taskRepository = $taskRepository;
+        $this->model = $taskRepository->getModel();
     }
 
     /**
@@ -21,7 +23,7 @@ class TaskController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
-        $data = $this->model->all();
+        $data = $this->taskRepository->all();
         return apiResponse(data: $data);
     }
 
@@ -33,7 +35,7 @@ class TaskController extends ApiControllerBase
      */
     public function store(Request $request): JsonResponse
     {
-        $data = $this->model->create($request->all());
+        $data = $this->taskRepository->create($request->all());
         return apiResponse(data: $data, status: 201);
     }
 
@@ -46,7 +48,7 @@ class TaskController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-        $data = $this->model->find($id);
+        $data = $this->taskRepository->find($id);
         return apiResponse(data: $data);
     }
 
@@ -59,7 +61,7 @@ class TaskController extends ApiControllerBase
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $data = $this->model->where('id', $id)->update($request->all());
+        $data = $this->taskRepository->find($id)->update($request->all());
         return apiResponse(data: $data);
     }
 
@@ -72,7 +74,7 @@ class TaskController extends ApiControllerBase
      */
     public function destroy(Request $request, $id): JsonResponse
     {
-        $data = $this->model->where('id', $id)->delete();
+        $data = $this->taskRepository->delete($id);
         return apiResponse(data: $data, status: 204);
     }
 }

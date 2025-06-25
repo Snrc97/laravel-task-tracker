@@ -1,6 +1,3 @@
-@php
-session()->start();
-@endphp
 <!DOCTYPE html>
 
 <head>
@@ -61,6 +58,8 @@ session()->start();
 
 
     @stack('scripts')
+
+    @stack('modals')
 
 
 </body>

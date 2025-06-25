@@ -1,47 +1,65 @@
-<aside class="w-64 bg-white dark:bg-[#1A1A1A] border-r border-[#E5E5EA] dark:border-[#3E3E3A] h-screen px-4 py-6">
-    <ul class="space-y-2">
-        @foreach ($sidebarItems as $item)
-            @if (isset($item['children']))
-                <li class="relative">
-                    <button
-                        class="flex items-center justify-between w-full px-2 py-2 font-semibold text-left text-gray-600 dark:text-[#EDEDEC] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                        type="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        {{ $item['title'] }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <ul
-                        class="absolute top-0 left-0 w-full bg-white dark:bg-[#1A1A1A] border-t border-b border-[#E5E5EA] dark:border-[#3E3E3A] transform -translate-y-full transition duration-300 ease-in-out"
-                        aria-label="{{ $item['title'] }}"
-                        role="menu"
-                    >
-                        @foreach ($item['children'] as $child)
-                            <li class="px-2 py-2">
-                                <a
-                                    href="{{ $child['href'] }}"
-                                    class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 dark:text-[#EDEDEC] hover:bg-gray-100 dark:hover:bg-[#2B2B2B] focus:outline-none focus:bg-gray-100 dark:focus:bg-[#2B2B2B]"
-                                    role="menuitem"
-                                >
-                                    {{ $child['title'] }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-            @else
-                <li class="px-2 py-2">
-                    <a
-                        href="{{ $item['href'] }}"
-                        class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 dark:text-[#EDEDEC] hover:bg-gray-100 dark:hover:bg-[#2B2B2B] focus:outline-none focus:bg-gray-100 dark:focus:bg-[#2B2B2B]"
-                    >
-                        {{ $item['title'] }}
-                    </a>
-                </li>
-            @endif
-        @endforeach
-    </ul>
-</aside>
+@push('styles')
+<link href="{{ asset('vendor/Snrc97/css/sidebar/main.css') }}" rel="stylesheet">
+@endpush
+
+<nav class="navbar navbar-default no-margin">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header fixed-brand">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+<span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+</button>
+         <a class="navbar-brand" href="#"><i class="fa fa-rocket fa-4"></i> M-33</a>
+      </div>
+      <!-- navbar-header-->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav">
+            <li class="active">
+               <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+               </button>
+            </li>
+         </ul>
+      </div>
+      <!-- bs-example-navbar-collapse-1 -->
+   </nav>
+   <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            @foreach($sidebarItems as $sidebarItem)
+            <li class="{{ ($sidebarItem['active'] ?? '') ? 'active' : '' }}">
+               <a href="{{ $sidebarItem['href'] }}">
+                  <span class="fa-stack fa-lg pull-left">
+                     <i class="fa {{ $sidebarItem['icon'] ?? '' }} fa-stack-1x "></i>
+                  </span>
+                  {{ $sidebarItem['title'] }}
+               </a>
+               @if(isset($sidebarItem['children']) && count($sidebarItem['children']))
+               <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                  @foreach($sidebarItem['children'] as $child)
+                  <li><a href="{{ $child['href'] }}">{{ $child['title'] }}</a></li>
+                  @endforeach
+               </ul>
+               @endif
+            </li>
+            @endforeach
+         </ul>
+      </div>
+      <!-- /#sidebar-wrapper -->
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+         <div class="container-fluid xyz">
+            <div class="row">
+               <div class="col-lg-12">
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+   </div>
+   <!-- /#wrapper -->
+   <!-- jQuery -->
+
+@push('scripts')
+    <script src="{{ asset('vendor/Snrc97/js/sidebar/main.js') }}"></script>
+@endpush

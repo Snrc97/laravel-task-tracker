@@ -2,16 +2,14 @@
 
 namespace App\Repositories;
 
-interface RepositoryInterface {
 
-}
 
 /**
  * Class RepositoryBase implements RepositoryInterface
  * @package App\Repositories
  * @template TModel
  */
-class RepositoryBase implements RepositoryInterface
+abstract class RepositoryBase
 {
     /**
      * @var TModel
@@ -29,10 +27,9 @@ class RepositoryBase implements RepositoryInterface
     /**
      * @param TModel $model
      */
-    public function __construct($model)
+    public function __construct()
     {
-        $type = $model::class;
-        $this->model = new $type();
+
     }
 
     /**

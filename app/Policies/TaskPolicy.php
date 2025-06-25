@@ -6,7 +6,7 @@ use App\Models\TaskModel;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Collection;
 
-class TaskPolicy
+class TaskPolicy extends PolicyBase
 {
     /**
      * Create a new policy instance.
@@ -19,8 +19,8 @@ class TaskPolicy
     /**
      *
      * @param \App\Models\UserModel $user
-     * @param Collection<int, \App\Models\TaskModel> $collection
-     * @return Collection<int, \App\Models\TaskModel> $collection
+     * @param Collection<int, TaskModel> $collection
+     * @return Collection<int, TaskModel> $collection
      */
     public function authorizeCollection(UserModel $user, $collection )
     {
@@ -34,7 +34,13 @@ class TaskPolicy
         return $collection;
     }
 
-     public function authorize(UserModel $user, TaskModel $model): bool
+     /**
+      *
+      * @param UserModel $user
+      * @param TaskModel $model
+      * @return bool
+      */
+     public function authorize(UserModel $user, $model): bool
      {
         $project = $model->project()?->first();
         $row_user_id = $project?->user_id ?? null;

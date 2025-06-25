@@ -4,9 +4,10 @@ namespace App\Policies;
 
 use App\Models\ProjectModel;
 use App\Models\UserModel;
+use App\Policies\Interfaces\PolicyInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class ProjectPolicy
+class ProjectPolicy extends PolicyBase
 {
     /**
      * Create a new policy instance.
@@ -18,9 +19,9 @@ class ProjectPolicy
 
     /**
      *
-     * @param \App\Models\UserModel $user
-     * @param Collection<int, \App\Models\ProjectModel> $collection
-     * @return Collection<int, \App\Models\ProjectModel> $collection
+     * @param UserModel $user
+     * @param Collection<int, ProjectModel> $collection
+     * @return Collection<int, ProjectModel> $collection
      */
     public function authorizeCollection(UserModel $user, $collection )
     {
@@ -33,7 +34,13 @@ class ProjectPolicy
         return $collection;
     }
 
-     public function authorize(UserModel $user, ProjectModel $model): bool
+     /**
+      *
+      * @param UserModel $user
+      * @param ProjectModel $model
+      * @return bool
+      */
+     public function authorize(UserModel $user, $model): bool
      {
         $row_user_id = $model->user_id ?? null;
          return $user->id === $row_user_id;

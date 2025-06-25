@@ -1,5 +1,12 @@
-function Progress() {
-    return ``;
+function ProgressVisibility(visible) {
+    $elm = $('.progress-circle-container');
+    if (visible) {
+        $elm.removeClass("d-none");
+    } else {
+        $elm.addClass("d-none");
+    }
+
+    $elm = null;
 }
 
 /**
@@ -9,6 +16,22 @@ function Progress() {
  */
 function AjaxRequest(options) {
     let csrf = $('meta[name="csrf-token"]').attr('content');
+
+        ProgressVisibility(true);
+
+        if(!options.completeCallback) {
+            options.completeCallback = () => {
+                ProgressVisibility(false);
+            }
+        }
+        else
+        {
+            options.completeCallback = () => {
+                ProgressVisibility(false);
+                options.completeCallback();
+            }
+        }
+
     return $.ajax({
         url: options.url,
         type: options.type || 'GET',

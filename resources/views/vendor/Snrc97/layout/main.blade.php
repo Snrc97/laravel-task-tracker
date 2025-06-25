@@ -1,3 +1,6 @@
+@php
+session()->start();
+@endphp
 <!DOCTYPE html>
 
 <head>
@@ -8,7 +11,9 @@
     <title>
         {{ $title }}
     </title>
-    <link href="{{ asset('vendor/Snrc97/css/site.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/Snrc97/css/site/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/Snrc97/css/datatable/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/Snrc97/css/modal/main.css') }}" rel="stylesheet">
 
     <!-- Bootstrap CSS CDN -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +30,9 @@
 </head>
 
 <body>
+    <div class="progress-circle-container">
+        <img class="progress-circle" src="{{ asset('vendor/Snrc97/img/progress-circle.gif') }}"/>
+    </div>
     <div class="container">
         @yield ('header')
         @stack('before-content')
@@ -56,3 +64,5 @@
 </body>
 
 </html>
+@php
+@endphp

@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy('App\Models\ProjectModel', 'App\Policies\ProjectPolicy');
-        Gate::policy('App\Models\TaskModel', 'App\Policies\TaskPolicy');
+        //
     }
 }

@@ -17,15 +17,19 @@ class AuthenticateSession
     public function handle(Request $request, Closure $next): Response
     {
             auth()->shouldUse('web');
-            $sessdata = $request?->session()?->all() ?? null;
+            // $sessdata = $request?->session()?->all() ?? null;
             $check = auth()->check();
+
             if($check) {
+
                 if($request->is('web/dashboard/login') || $request->is('web/dashboard/register')) {
                     return redirect(route('dashboard'));
                 }
+
             }
             else
             {
+                authLogout($request);
                 if(!$request->is('web/dashboard/login') && !$request->is('web/dashboard/register')) {
                     return redirect(route('login'));
                 }

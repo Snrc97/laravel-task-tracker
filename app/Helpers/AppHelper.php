@@ -4,10 +4,19 @@ use App\Models\UserModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+CONST PER_PAGE = 10;
+
 function apiResponse($data = [], $status = 200, $message = null, array $params = []): JsonResponse
 {
-    $recordsTotal = count($data);
-    $recordsFiltered = $recordsTotal;
+    $recordsFiltered = 0;
+    if(is_array($data))
+    {
+        $recordsFiltered = count($data);
+    }
+    else if(is_object($data))
+    {
+        $recordsFiltered = 1;
+    }
 
     switch($status) {
 
@@ -25,14 +34,28 @@ function apiResponse($data = [], $status = 200, $message = null, array $params =
 
     }
 
+    $recordsTotal = 0;
+    if(is_array($data))
+    {
+        $page = $params['page'] ?? 1;
+
+        $start = ($page - 1) * PER_PAGE;
+
+        $data = collect($data)->skip($start)->take(PER_PAGE)->toArray();
+        $recordsTotal = count($data);
+    }
+    else if(is_object($data))
+    {
+        $recordsTotal = 1;
+    }
+
+
 
     $data = [
-        'data' => [
-            'records' => $data,
-            'draw' => $params['draw'] ?? 0,
-            'recordsTotal' => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
-        ],
+        'data' => $data,
+        'draw' => $params['draw'] ?? 0,
+        'recordsTotal' => $recordsTotal,
+        'recordsFiltered' => $recordsFiltered,
         'message' => $message,
         'success' => $status == 200,
         'status' => $status,
@@ -81,6 +104,14 @@ function withValidation(array $data, $rules, callable $next): JsonResponse
 function getUser()
 {
     return auth()?->user()?->getModel() ?? null;
+}
+
+function authLogout(Request $request = null)
+{
+    auth()->user()?->tokens()?->delete();
+    // auth()->logout();
+    $request?->session()?->flush();
+
 }
 
 function bomb(string|object|array|null $err_mess, $tag = '')

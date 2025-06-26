@@ -14,7 +14,7 @@ Route::group([
     Route::post('logout', 'AuthenticationController@logout')->name('api.logout');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware([AuthMiddleware::class])->group(function () {
     Route::group([
         'prefix' => 'dashboard',
         'namespace' => 'App\Http\Controllers\Api',

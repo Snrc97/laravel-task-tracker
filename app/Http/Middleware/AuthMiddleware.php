@@ -17,9 +17,11 @@ class AuthMiddleware
     {
         auth()->shouldUse('sanctum');
 
-        $token = $request->header('Authorization') ?? session()->get('token', "");
-
+        $authorization = $request->header('Authorization') ?? null;
+        $token = $authorization ?? session()->get('token', "");
         if (empty($token)) {
+            authLogout($request);
+
             return apiResponse(
                 message: __('auth.failed', ['reason' => __('auth.token_not_provided')]),
                 status: 401
@@ -42,6 +44,7 @@ class AuthMiddleware
         finally {
 
             if (!$result) {
+                authLogout($request);
                 return apiResponse(
                     message: __('auth.failed', ['reason' => __('auth.invalid_token')]),
                     status: 401

@@ -1,3 +1,4 @@
+var table = null;
 function drawDataTable(id, options, customButtons) {
 
     if(options.dataSrc)
@@ -5,25 +6,20 @@ function drawDataTable(id, options, customButtons) {
         options.dataSrc ??= 'data';
     }
 
-    if(options.ajax)
-    {
-        options.ajax = {
-            url: options.ajax,
-            type: 'GET',
-            dataSrc: 'data.records',
-            'beforeSend' : function (xhr) {
-                const token = localStorage.getItem('token');
-                console.log(token);
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-            },
-            error: function (xhr) {
-                console.log(xhr.message);
-            }
-        }
-    }
+    table = $('#' + id).DataTable();
+
+    table.destroy();
+
+
+
+
+
+
 
     var defaultOptions = {
+        responsive: true,
+        serverSide: true,
+        processing: true,
         paging: true,
         searching: true,
         ordering: true,
@@ -32,26 +28,51 @@ function drawDataTable(id, options, customButtons) {
             style: 'multi',
             selector: 'td:first-child'
         },
-        columnDefs: [{
-            targets: 0,
-            data: null,
-            orderable: false,
-            className: 'select-checkbox',
-            defaultContent: ''
-        }, {
-            targets: -1,
-            data: null,
-            defaultContent: `
-                <button class="btn btn-warning"><i class="fa fa-pen fa-stack-1x"></i>Edit</button>
-                <button class="btn btn-danger"><i class="fa fa-trash fa-stack-1x"></i>Delete</button>
-                ${customButtons || ''}
-            `
-        }]
+
+
+
+
     };
+
+
+    options = {
+        ...options,
+
+        columnDefs: [
+            {
+                targets: '_all',
+                className: "all dt-center",
+            },
+
+        ],
+    }
+
+
 
     var finalOptions = $.extend(true, {}, defaultOptions, options);
 
-    $('#' + id).DataTable(finalOptions);
+
+    if(finalOptions.ajax)
+    {
+        finalOptions.ajax = {
+            url: finalOptions.ajax,
+            type: 'GET',
+            dataSrc: 'data',
+            beforeSend : function (xhr) {
+                const token = localStorage.getItem('token');
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+            },
+
+            error: function (xhr) {
+                console.log(xhr.message);
+            }
+        }
+    }
+
+    table = $('#' + id).DataTable(finalOptions);
+
+
 }
 
 // Usage

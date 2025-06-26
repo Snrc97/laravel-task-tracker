@@ -1,3 +1,5 @@
+let csrf = null;
+
 function ProgressVisibility(visible) {
     $elm = $(".progress-circle-container");
     if (visible) {
@@ -20,7 +22,7 @@ function formDataToData(formData) {
  * @returns
  */
 function AjaxRequest(options) {
-    const csrf = options?.headers?.csrf ?? $('meta[name="csrf-token"]').attr("content");
+    const _csrf = csrf ?? options?.headers?.csrf ?? $('meta[name="csrf-token"]').attr("content");
 
     ProgressVisibility(true);
 
@@ -52,7 +54,7 @@ function AjaxRequest(options) {
             if (!file_upload && typeof options.data === "object") {
             } else {
                 options.contentType = false;
-                options.data = { ...options.data, _token: csrf };
+                options.data = { ...options.data, _token: _csrf };
             }
 
             break;
@@ -83,7 +85,7 @@ function AjaxRequest(options) {
         data: options.data || {},
         headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token") ?? "",
-            "X-CSRF-TOKEN": csrf,
+            "X-CSRF-TOKEN": _csrf,
             "cache-control": "no-cache",
             withCredentials: true,
             ...(options.headers || {}),
@@ -96,7 +98,6 @@ function AjaxRequest(options) {
     });
 }
 
-let csrf = null;
 
 $( async () => {
     csrf = await AjaxRequest({

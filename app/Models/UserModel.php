@@ -23,6 +23,7 @@ class UserModel extends AuthenticableModelBase
         'email',
         'email_verified_at',
         'password',
+        'api_token',
         'remember_token',
     ];
 
@@ -33,6 +34,7 @@ class UserModel extends AuthenticableModelBase
      */
     protected $hidden = [
         'password',
+        'api_token',
         'remember_token',
     ];
 

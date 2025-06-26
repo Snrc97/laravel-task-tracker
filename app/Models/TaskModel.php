@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class TaskModel extends ModelBase
 {
+    use HasFactory;
+
     protected $table = 'tasks';
 
     protected $fillable = [

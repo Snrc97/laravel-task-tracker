@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class ProjectModel extends ModelBase
 {
+    use HasFactory;
+
     protected $table = 'projects';
+
     protected $fillable = [
         'user_id',
         'name'

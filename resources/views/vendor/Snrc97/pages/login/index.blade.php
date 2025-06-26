@@ -39,16 +39,20 @@
 async function handleLoginFormSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log("formData", data);
+    const data = formDataToData(formData);
     let options = {
         url: "{{ route('api.login') }}",
         type: 'POST',
         data: data,
+        headers : {
+            'X-CSRF-TOKEN': csrf
+        },
         successCallback: (xhr) => {
-            localStorage.setItem('access_token', xhr.token);
-            alert(xhr.message);
-            window.location.reload();
+            let token = xhr.data.records.token;
+            localStorage.setItem('token', token);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         }
     }
     await AjaxRequest(options);

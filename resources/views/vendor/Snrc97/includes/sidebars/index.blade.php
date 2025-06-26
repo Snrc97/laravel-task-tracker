@@ -49,7 +49,7 @@
       <div id="page-content-wrapper">
          <div class="container-fluid xyz">
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col-12">
 
                </div>
             </div>
@@ -58,7 +58,7 @@
       <!-- /#page-content-wrapper -->
    </div>
    <!-- /#wrapper -->
-   <!-- jQuery -->
+
 
 @push('scripts')
     <script src="{{ asset('vendor/Snrc97/js/sidebar/main.js') }}"></script>

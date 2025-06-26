@@ -1,20 +1,43 @@
 @php
     $id ??= $title . 'Datatable';
+    $modalId = $title . 'Modal';
 @endphp
-<table id="{{ $id }}" class="display" style="width:100%">
-    <thead>
-        <tr>
-            @foreach ($columns as $column)
-                <th>{{ $column['title'] }}</th>
-            @endforeach
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+
+    <div class="row pb-3">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button type="button" class="btn btn-dark" onclick="DisplayModal('{{ $modalId }}', true)" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">
+                <i class="fa fa-plus"></i> {{ __('all.add') }}
+            </button>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table id="{{ $id }}" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            @foreach ($columns as $column)
+                                <th>{{ $column['title'] }}</th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
 
 @push('modals')
-    @include('vendor.Snrc97.includes.modals.index', ['title' => $title, 'inputs' => $columns, 'url' => $ajax ?? null])
+    @include('vendor.Snrc97.includes.modals.index', ['title' => $title, 'id' => $modalId, 'inputs' => $inputs, 'url' => $ajax ?? null])
 @endpush
 
 @push('scripts')
@@ -41,18 +64,7 @@
                     },
                 @endforeach
             ],
-            @if (isset($paging))
-                paging: {{ $paging ? 'true' : 'false' }},
-            @endif
-            @if (isset($searching))
-                searching: {{ $searching ? 'true' : 'false' }},
-            @endif
-            @if (isset($ordering))
-                ordering: {{ $ordering ? 'true' : 'false' }},
-            @endif
-            @if (isset($info))
-                info: {{ $info ? 'true' : 'false' }},
-            @endif
+
             customButtons: '{{ $customButtons ?? '' }}',
         });
     </script>

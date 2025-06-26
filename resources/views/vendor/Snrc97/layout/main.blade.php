@@ -41,10 +41,10 @@
     @yield ('footer')
 
     <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <!-- Bootstrap JS CDN -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap 5 JS (needs Popper too) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <!-- DataTables JS CDN -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -54,6 +54,8 @@
     <script src="{{ asset('vendor/Snrc97/js/datatable.js') }}"></script>
 
 
+    <script src="{{ asset('vendor/Snrc97/js/form.js') }}"></script>
+    <script src="{{ asset('vendor/Snrc97/js/modal.js') }}"></script>
     <script src="{{ asset('vendor/Snrc97/js/helper.js') }}"></script>
 
 

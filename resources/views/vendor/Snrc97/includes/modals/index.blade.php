@@ -6,9 +6,9 @@ $id ??= $title."Modal";
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ $id }}Label">{{ $title }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('all.close') }}"></button>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="{{ __('all.close') }}"><i class="fa fa-close"></i></button>
             </div>
-            <form action="{{ $url }}" method="{{ $method ?? 'POST' }}">
+            <form action="javascript:void(0)" id="{{ $id }}Form" method="{{ 'POST' }}">
                 @csrf
                 <div class="modal-body">
                     @foreach($inputs as $input)
@@ -32,9 +32,22 @@ $id ??= $title."Modal";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('all.close') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ __('all.save')}}</button>
+                    <button type="submit" class="btn btn-dark">{{ __('all.save')}}</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        $(()=>{
+            $('#{{ $id }}Form').on('submit', function(e) {
+            alert('submit');
+            e.preventDefault();
+            handleSubmit(e , '{{ $url }}')
+        });
+        });
+
+    </script>
+@endpush

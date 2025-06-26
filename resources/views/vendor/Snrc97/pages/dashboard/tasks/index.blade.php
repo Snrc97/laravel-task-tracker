@@ -23,8 +23,12 @@
                 'data' => 'updated_at',
             ],
         ];
+
+        $inputs = collect($columns)->only(1, 2)->toArray();
     @endphp
     @include('vendor.Snrc97.includes.datatables.index', [
+        'columns' => $columns,
+        'inputs' => $inputs,
         'ajax' => '/api/dashboard/tasks',
         'title' => __('all.tasks.title'),
     ])

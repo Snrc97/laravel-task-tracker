@@ -15,7 +15,10 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->header('Authorization');
+        auth()->shouldUse('sanctum');
+
+        $token = $request->header('Authorization') ?? session()->get('token', "");
+
         if (empty($token)) {
             return apiResponse(
                 message: __('auth.failed', ['reason' => __('auth.token_not_provided')]),
@@ -24,8 +27,11 @@ class AuthMiddleware
         }
         $result = false;
 
+        $token = str_replace('Bearer ', '', $token);
         try {
-            $result = auth()->validate(['token' => $token]);
+
+            $result = auth()->user();
+
         } catch (\Exception $e) {
             return apiResponse(
                 message:__('auth.failed', ['reason' => $e->getMessage()]),

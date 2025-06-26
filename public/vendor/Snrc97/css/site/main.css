@@ -16,8 +16,8 @@ body .container {
   justify-self: center;
 }
 body .container-fluid {
-  width: inherit;
-  height: inherit;
+  width: 100%;
+  height: 100%;
 }
 body .progress-circle-container {
   width: inherit;

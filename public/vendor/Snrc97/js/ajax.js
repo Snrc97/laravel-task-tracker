@@ -9,13 +9,18 @@ function ProgressVisibility(visible) {
     $elm = null;
 }
 
+function formDataToData(formData) {
+
+    return Object.fromEntries(formData.entries());
+}
+
 /**
  *
  * @param {url, type, data, dataType, beforeSendCallback, successCallback, errorCallback, completeCallback} options
  * @returns
  */
 function AjaxRequest(options) {
-    let csrf = $('meta[name="csrf-token"]').attr("content");
+    const csrf = options?.headers?.csrf ?? $('meta[name="csrf-token"]').attr("content");
 
     ProgressVisibility(true);
 
@@ -44,8 +49,7 @@ function AjaxRequest(options) {
                 contentType: "application/json",
             };
 
-            if (!file_upload) {
-                options.data = JSON.stringify(options.data);
+            if (!file_upload && typeof options.data === "object") {
             } else {
                 options.contentType = false;
                 options.data = { ...options.data, _token: csrf };
@@ -62,7 +66,7 @@ function AjaxRequest(options) {
                 contentType: "application/json",
             };
 
-            options.data = JSON.stringify(options.data);
+
 
             break;
         case "DELETE":
@@ -72,14 +76,17 @@ function AjaxRequest(options) {
 
     // console.log("options", options);
 
+
     return $.ajax({
         url: options.url,
         type: options.type || "GET",
         data: options.data || {},
         headers: {
-            Authorization:
-                "Bearer " + localStorage.getItem("access_token") ?? "",
+            Authorization: "Bearer " + localStorage.getItem("access_token") ?? "",
             "X-CSRF-TOKEN": csrf,
+            "cache-control": "no-cache",
+            withCredentials: true,
+            ...(options.headers || {}),
         },
         dataType: options.dataType || "json",
         beforeSend: options.beforeSendCallback ?? null,
@@ -88,3 +95,12 @@ function AjaxRequest(options) {
         complete: options.completeCallback ?? null,
     });
 }
+
+let csrf = null;
+
+$( async () => {
+    csrf = await AjaxRequest({
+        url: "/sanctum/csrf-cookie",
+
+    }).then(xhr => xhr.csrf_token);
+});

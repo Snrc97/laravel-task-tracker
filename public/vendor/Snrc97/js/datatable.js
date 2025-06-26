@@ -5,6 +5,24 @@ function drawDataTable(id, options, customButtons) {
         options.dataSrc ??= 'data';
     }
 
+    if(options.ajax)
+    {
+        options.ajax = {
+            url: options.ajax,
+            type: 'GET',
+            dataSrc: 'data.records',
+            'beforeSend' : function (xhr) {
+                const token = localStorage.getItem('token');
+                console.log(token);
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+            },
+            error: function (xhr) {
+                console.log(xhr.message);
+            }
+        }
+    }
+
     var defaultOptions = {
         paging: true,
         searching: true,

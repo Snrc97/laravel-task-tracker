@@ -12,9 +12,8 @@ class AuthenticationController extends ApiControllerBase
 {
     public function register(Request $request): JsonResponse
     {
-        return withValidation($request, UserModel::rules('register'), function ($validatedData) use ($request) {
-
-
+        $data = $request->only(['email', 'password', 'name']);
+        return withValidation($data, UserModel::rules('register'), function ($validatedData) use ($request) {
             $user = UserModel::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
@@ -31,19 +30,18 @@ class AuthenticationController extends ApiControllerBase
                 201,
             );
         });
-
     }
 
     public function login(Request $request): JsonResponse
     {
-
-        return withValidation($request, UserModel::rules('login'), function ($validatedData) use ($request) {
-
-
-            $hash_options = ['cost' => 12];
+        $data = $request->only(['email', 'password']);
+        return withValidation($data, UserModel::rules('login'), function ($validatedData) use ($request) {
             $userCheck = UserModel::where(['email' => $validatedData['email']])->first();
-            if(!Hash::check($validatedData['password'], hashedValue: $userCheck->password."", options: $hash_options))
-            {
+
+            // $hashed_password = Hash::make($validatedData['password'], ['cost' => 12]);
+            // $check_result = Hash::check($validatedData['password'], $hashed_password);
+            $attempt_result = auth()->attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']], remember: $request->filled('remember') ?? true);
+            if (!$attempt_result) {
                 return apiResponse(
                     [
                         'message' => __('auth.failed', ['reason' => 'auth.invalid_credentials']),
@@ -52,24 +50,28 @@ class AuthenticationController extends ApiControllerBase
                 );
             }
 
-            auth()->login($userCheck);
-            $token = $userCheck->createToken('auth_token')->plainTextToken;
+            $token = $userCheck->createToken("api_token");
+            $userCheck->update( [
+                'api_token' => $token->plainTextToken
+            ]);
+
+            $access_token = $token->plainTextToken;
+            $request->cookies->set('token', $access_token);
+            $request?->session()?->put('token', $access_token);
+            $request?->session()?->save();
             return apiResponse(
                 [
                     'user' => $userCheck,
-                    'token' => $token,
+                    'token' => $access_token,
                 ],
                 200,
             );
         });
-
-
-
     }
 
-    public function logout(): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        auth()->logout();
+        authLogout($request);
         return apiResponse(
             [
                 'message' => __('auth.logout_success'),

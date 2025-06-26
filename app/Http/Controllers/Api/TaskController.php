@@ -20,6 +20,7 @@ class TaskController extends ApiControllerBase
         $this->taskRepository = $taskRepository;
         $this->taskPolicy = $taskPolicy;
         $this->model = $taskRepository->getModel();
+        $this->model->load('project', 'project.user');
     }
 
     /**

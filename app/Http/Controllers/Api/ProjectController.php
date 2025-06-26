@@ -21,6 +21,7 @@ class ProjectController extends ApiControllerBase
         $this->projectRepository = $projectRepository;
         $this->projectPolicy = $projectPolicy;
         $this->model = $projectRepository->getModel();
+        $this->model->load('user', 'tasks');
     }
 
     /**

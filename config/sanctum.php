@@ -17,7 +17,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+        'localhost,localhost:3000,0.0.0.0:8000,localhost:8000,127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort(),
         // Sanctum::currentRequestHost(),
     ))),
@@ -34,7 +34,7 @@ return [
     |
     */
 
-    'guard' => ['web'],
+    'guard' => ['web', 'api'],
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
     */
 
     'middleware' => [
-        'authenticate_session' => App\Http\Middleware\AuthenticateSession::class,
+        'verify_stateful' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
         'validate_csrf_token' => App\Http\Middleware\ValidateCsrfToken::class,
     ],

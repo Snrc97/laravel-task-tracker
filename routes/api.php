@@ -1,15 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\AuthenticationController;
-use App\Http\Controllers\Api\ProjectController;
-use App\Http\Controllers\Api\TaskController;
 use App\Http\Middleware\AuthMiddleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
 
 Route::group([
     'prefix' => 'auth',
@@ -20,15 +14,16 @@ Route::group([
     Route::post('logout', 'AuthenticationController@logout')->name('api.logout');
 });
 
-Route::group([
-    'prefix' => 'dashboard',
-    'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => 'auth:sanctum',
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::group([
+        'prefix' => 'dashboard',
+        'namespace' => 'App\Http\Controllers\Api',
 
-], function () {
-    Route::resource('projects', 'ProjectController');
-    Route::resource('tasks', 'TaskController');
-})
-;
+    ], function () {
+        Route::resource('projects', 'ProjectController');
+        Route::resource('tasks', 'TaskController');
+    })
+    ;
+});
 
 

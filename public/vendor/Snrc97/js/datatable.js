@@ -45,7 +45,7 @@ function drawDataTable(id, options, customButtons) {
             {
                 targets: [0],
                 orderable: false,
-                defaultContent: '<input type="checkbox" class="form-check-input" />',
+                defaultContent: '<input type="checkbox" class="form-check-input p-0 m-0 position-relative" />',
             },
             {
                 targets: [options.columns.length-1],

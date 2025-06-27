@@ -32,12 +32,15 @@ function datatableDataProcess(array &$data, array &$params): void
                     foreach($item as $key => $value) {
                         if(is_string($value)) {
                             if(stripos($value, $search) !== false) {
-                                return $item;
+                                break;
                             }
-                            return null;
+                            $item = null;
                         }
                     }
                 }
+
+                $item['select'] = '<input type="checkbox" class="form-check-input" name="id[]" value="'.$item['id'].'">';
+                $item['actions'] = '';
                 return $item;
             }
         )->values()->toArray();

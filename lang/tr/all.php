@@ -7,10 +7,13 @@ return [
     'edit' => 'Düzenle',
     'delete' => 'Sil',
     'add' => 'Ekle',
+    'select' => 'Seç',
 
     'success' => 'Başarılı',
     'error' => 'Hata',
     'unknown_error' => 'Bilinmeyen Hata',
+
+    'actions' => 'İşlemler',
 
     'name' => 'İsim',
     'created_at' => 'Oluşturulma Tarihi',

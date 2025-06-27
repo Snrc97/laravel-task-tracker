@@ -18,11 +18,12 @@ function CreateModal(modalId) {
     DisplayModal(modalId, null, true);
 }
 
-function EditModal(modalId, id) {
+function EditModal(modalId, row) {
     DisplayModal(modalId, (modal)=> {
+        const id = row.id;
         $modal = $(modal);
         $modal.find('#id').val(id);
         console.log($modal);
-        FillFormInputs({ mode: 'edit', container: $modal, data: { id } });
+        FillFormInputs({ mode: 'edit', container: $modal, data: row });
     }, true);
 }

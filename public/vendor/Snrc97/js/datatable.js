@@ -52,11 +52,11 @@ function drawDataTable(id, options, customButtons) {
                 orderable: false,
                 defaultContent: ``,
                 render: function (data, type, row, meta) {
-                    const row_id = row.id;
+                    const row_json = JSON.stringify(row);
                     return `
                     <div class="btn-group px-2">
-                        <button class="dt-row-btn btn btn-warning" onclick="EditModal('${modalId}', ${row_id})"><i class="fa fa-pencil mr-1"></i></button>
-                        <button class="dt-row-btn btn btn-danger" onclick="DeleteModal('${modalId}', ${row_id})"><i class="fa fa-trash mr-1"></i></button>
+                        <button class="dt-row-btn btn btn-warning" onclick='EditModal("${modalId}", ${row_json})'><i class="fa fa-pencil mr-1"></i></button>
+                        <button class="dt-row-btn btn btn-danger" onclick='DeleteModal("${modalId}", ${row_json})'><i class="fa fa-trash mr-1"></i></button>
                     </div>
                     `;
                 },

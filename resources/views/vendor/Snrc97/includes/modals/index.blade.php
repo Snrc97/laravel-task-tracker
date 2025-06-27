@@ -15,15 +15,28 @@ $id ??= $title."Modal";
                     @php
                     $label = $input['label'] ?? $input['title'];
                     $data = $input['name'] ?? $input['data'];
+                    $elementType = $input['elementType'] ?? null;
                     @endphp
-                        <div class="mb-3">
+                        <div class="mb-3 flex-column">
                             <label for="{{ $data }}" class="form-label">{{ $label }}</label>
-                            @if(isset($input['elementType']) && $input['elementType'] === 'select')
-                                <select class="form-select" id="{{ $data }}" name="{{ $data }}">
+                            @if( $elementType === 'select')
+                                <select class="form-select w-100" id="{{ $data }}" name="{{ $data }}">
                                     @foreach($input['options'] as $key => $value)
                                         <option value="{{ $key }}" {{ (old($data) ?? $input['value'] ?? '') === $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
+                                @elseif( $elementType === 'checkbox')
+                                <input type="checkbox" class="form-check-input" id="{{ $data }}" name="{{ $data }}" value="1" {{ (old($data) ?? $input['value'] ?? '') === '1' ? 'checked' : '' }}>
+                                @elseif( $elementType === 'radio')
+                                <input type="radio" class="form-check-input" id="{{ $data }}" name="{{ $data }}" value="1" {{ (old($data) ?? $input['value'] ?? '') === '1' ? 'checked' : '' }}>
+                                @elseif( $elementType === 'textarea')
+                                <textarea class="form-control" id="{{ $data }}" name="{{ $data }}">{{ old($data) ?? $input['value'] ?? '' }}</textarea>
+                                @elseif( $elementType === 'file')
+                                <input type="file" class="form-control" id="{{ $data }}" name="{{ $data }}" value="{{ old($data) ?? $input['value'] ?? '' }}">
+                                @elseif( $elementType === 'switch')
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="{{ $data }}" name="{{ $data }}" value="1" {{ (old($data) ?? $input['value'] ?? '') === '1' ? 'checked' : '' }} aria-checked="{{ (old($data) ?? $input['value'] ?? '') === '1' ? 'true' : 'false' }}">
+                                </div>
                             @else
                                 <input type="{{ $input['type'] ?? 'text' }}" class="form-control" id="{{ $data }}" name="{{ $data }}" value="{{ old($data) ?? $input['value'] ?? '' }}">
                             @endif

@@ -7,12 +7,13 @@
                 'data' => 'id',
             ],
             [
-                'title' => __('all.projects.title'),
+                'title' => __('all.projects.singular'),
                 'data' => 'project_id',
             ],
             [
                 'title' => __('all.status'),
                 'data' => 'status',
+
             ],
             [
                 'title' => __('all.created_at'),
@@ -24,7 +25,26 @@
             ],
         ];
 
-        $inputs = collect($columns)->only(1, 2)->toArray();
+        $projects = App\Models\ProjectModel::pluck('name', 'id')->toArray();
+
+
+        $inputs = [
+
+            [
+                'title' => __('all.projects.singular'),
+                'name' => 'project_id',
+                'elementType' => 'select',
+                'options' => $projects
+            ],
+            [
+                'title' => __('all.status'),
+                'name' => 'status',
+                'elementType' => 'switch',
+
+            ],
+
+        ];
+
     @endphp
     @include('vendor.Snrc97.includes.datatables.index', [
         'columns' => $columns,

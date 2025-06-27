@@ -37,11 +37,11 @@ function apiResponse($data = [], $status = 200, $message = null, array $params =
     $recordsTotal = 0;
     if(is_array($data))
     {
-        $page = $params['page'] ?? 1;
 
-        $start = ($page - 1) * PER_PAGE;
+        $start = (int)$params['start'] ?? 0;
+        $length = (int)$params['length'] ?? PER_PAGE;
 
-        $data = collect($data)->skip($start)->take(PER_PAGE)->toArray();
+        $data = collect($data)->skip($start)->take($length)->toArray();
         $recordsTotal = count($data);
     }
     else if(is_object($data))

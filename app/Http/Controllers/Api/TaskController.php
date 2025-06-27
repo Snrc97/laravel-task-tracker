@@ -31,7 +31,9 @@ class TaskController extends ApiControllerBase
      */
     public function index(Request $request): JsonResponse
     {
+        $params = $request->all();
         $params = [
+            ...$params,
             'draw' => $request->draw ?? 1
         ];
         $collection = $this->taskRepository->all();

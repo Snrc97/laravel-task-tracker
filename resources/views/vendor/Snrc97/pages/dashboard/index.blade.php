@@ -1,6 +1,11 @@
-@extends('vendor.Snrc97.layout.main', ['title' => $title ?? __('all.dashboard.title')])
+@php
+$title ??= "Project Task Tracker - " . __('all.dashboard.title');
+@endphp
+@extends('vendor.Snrc97.layout.main', ['title' => $title])
 @push('styles')
 @endpush
+
+
 
 @section('content')
     <div class="wrapper">
@@ -24,7 +29,22 @@
             ];
         @endphp
         @include('vendor/Snrc97/includes/sidebars/index', ['sidebarItems' => $sidebarItems])
-        @yield('dashboard-content')
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h1>
+                        {{ $title ?? "" }}
+                    </h1>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    @yield('dashboard-content')
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 

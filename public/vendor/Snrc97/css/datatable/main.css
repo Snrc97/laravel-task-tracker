@@ -1,3 +1,27 @@
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px !important;
+}
+
+.dt-row-btn {
+  color: #fff !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 100px !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50px !important;
+}
+.dt-row-btn i {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 table.dataTable {
   border-collapse: separate;
   border-spacing: 0 5px;

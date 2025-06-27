@@ -1,5 +1,5 @@
 @php
-$title ??= "Project Task Tracker - " . __('all.dashboard.title');
+$title = "Project Task Tracker - " . __('all.dashboard.title');
 @endphp
 @extends('vendor.Snrc97.layout.main', ['title' => $title])
 @push('styles')
@@ -31,9 +31,9 @@ $title ??= "Project Task Tracker - " . __('all.dashboard.title');
         @include('vendor/Snrc97/includes/sidebars/index', ['sidebarItems' => $sidebarItems])
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col d-flex justify-content-center">
                     <h1>
-                        {{ $title ?? "" }}
+                        {{ $title }}
                     </h1>
                 </div>
 

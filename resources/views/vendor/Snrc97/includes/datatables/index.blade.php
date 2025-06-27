@@ -3,19 +3,19 @@
     $modalId = $title . 'Modal';
 @endphp
 
-    <div class="row pb-3">
+    <div class="row">
         <div class="col-6">
-
+            <h3>{{ $title }} Tablosu</h3>
         </div>
         <div class="col-6 d-flex justify-content-end">
-            <button type="button" class="btn btn-dark" onclick="DisplayModal('{{ $modalId }}', true)" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">
+            <button type="button" class="btn btn-dark" onclick="CreateModal('{{ $modalId }}')" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">
                 <i class="fa fa-plus"></i> {{ __('all.add') }}
             </button>
         </div>
 
     </div>
 
-    <div class="row">
+    <div class="row my-3">
         <div class="col">
             <div class="table-responsive">
                 <table id="{{ $id }}" class="display" style="width:100%">

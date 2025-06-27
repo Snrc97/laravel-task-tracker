@@ -11,6 +11,7 @@ $id ??= $title."Modal";
             <form action="javascript:void(0)" id="{{ $id }}Form" method="{{ 'POST' }}">
                 @csrf
                 <div class="modal-body">
+                    <input type="hidden" id="id" name="id" value="{{ $id ?? '' }}">
                     @foreach($inputs as $input)
                     @php
                     $label = $input['label'] ?? $input['title'];

@@ -3,6 +3,10 @@
     @php
         $columns = [
             [
+                'title' => __('all.select'),
+                'data' => 'DT_RowIndex',
+            ],
+            [
                 'title' => 'ID',
                 'data' => 'id',
             ],
@@ -22,6 +26,10 @@
                 'title' => __('all.updated_at'),
                 'data' => 'updated_at',
             ],
+            [
+                'title' => __('all.actions'),
+                'data' => 'actions',
+            ]
         ];
 
 $users_pluck = App\Models\UserModel::pluck('name', 'id')->toArray();

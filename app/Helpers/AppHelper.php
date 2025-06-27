@@ -25,6 +25,16 @@ function datatableDataProcess(array &$data, array &$params): void
         $start = (int)$params['start'] ?? 0;
         $length = (int)$params['length'] ?? PER_PAGE;
 
+        $order = $params['order'][0] ?? null;
+        if(isset($order)) {
+            $column = $order['column'];
+            $dir = $order['dir'];
+            $column = $params['columns'][$column]['data'];
+            $descending = $dir == "desc";
+
+            $data = collect($data)->sortBy($column, SORT_REGULAR, $descending)->values()->toArray();
+        }
+
         $data = collect($data)->skip($start)->take($length)->filter(
             function($item) use ($params) {
                 $search = $params['search']['value'] ?? null;
@@ -46,6 +56,9 @@ function datatableDataProcess(array &$data, array &$params): void
                 return $item;
             }
         )->values()->toArray();
+
+
+
         $recordsTotal = count($data);
     }
     else if(is_object($data))

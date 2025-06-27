@@ -20,6 +20,7 @@ function drawDataTable(id, options, customButtons) {
         responsive: true,
         serverSide: true,
         processing: true,
+        deferRender: true,
         paging: true,
         searching: true,
         ordering: true,
@@ -48,10 +49,7 @@ function drawDataTable(id, options, customButtons) {
     }
 
 
-
     var finalOptions = $.extend(true, {}, defaultOptions, options);
-
-
     if(finalOptions.ajax)
     {
         finalOptions.ajax = {
@@ -63,15 +61,20 @@ function drawDataTable(id, options, customButtons) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
             },
-
+            complete: function (xhr) {
+                const response = xhr.responseJSON;
+                console.log(response);
+            },
             error: function (xhr) {
                 console.log(xhr.message);
-            }
+            },
+
         }
     }
 
-    table = $('#' + id).DataTable(finalOptions);
 
+    table = $('#' + id).DataTable(finalOptions);
+    // table.columns.adjust().draw();
 
 }
 

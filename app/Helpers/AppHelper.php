@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 CONST PER_PAGE = 10;
 
-function apiResponse($data = [], $status = 200, $message = null, array $params = []): JsonResponse
+function datatableDataProcess(array &$data, array &$params): void
 {
     $recordsFiltered = 0;
     if(is_array($data))
@@ -18,6 +18,27 @@ function apiResponse($data = [], $status = 200, $message = null, array $params =
         $recordsFiltered = 1;
     }
 
+    $recordsTotal = 0;
+    if(is_array($data))
+    {
+
+        $start = (int)$params['start'] ?? 0;
+        $length = (int)$params['length'] ?? PER_PAGE;
+
+        $data = collect($data)->skip($start)->take($length)->values()->toArray();
+        $recordsTotal = count($data);
+    }
+    else if(is_object($data))
+    {
+        $recordsTotal = 1;
+    }
+
+    $params['recordsFiltered'] = $recordsFiltered;
+    $params['recordsTotal'] = $recordsTotal;
+}
+
+function apiResponse($data = [], $status = 200, $message = null, array $params = []): JsonResponse
+{
     switch($status) {
 
         case 200:
@@ -26,38 +47,17 @@ function apiResponse($data = [], $status = 200, $message = null, array $params =
             $message ??= __('all.success');
         break;
 
-
-
         default:
-
             $message ??= __('all.unknown_error') ;
-
     }
 
-    $recordsTotal = 0;
-    if(is_array($data))
-    {
-
-        $start = (int)$params['start'] ?? 0;
-        $length = (int)$params['length'] ?? PER_PAGE;
-
-        $data = collect($data)->skip($start)->take($length)->toArray();
-        $recordsTotal = count($data);
-    }
-    else if(is_object($data))
-    {
-        $recordsTotal = 1;
-    }
-
-    $params['draw'] ??= "1";
-    $params['draw'] = (int)$params['draw'];
-    $params['draw'] += 1;
+    $draw = $params['draw'] ?? 0;
 
     $data = [
         'data' => $data,
-        'draw' => $params['draw'],
-        'recordsTotal' => $recordsTotal,
-        'recordsFiltered' => $recordsFiltered,
+        'draw' => (int)$draw,
+        'recordsTotal' => $params['recordsTotal'] ?? 0,
+        'recordsFiltered' => $params['recordsFiltered'] ?? 0,
         'message' => $message,
         'success' => $status == 200,
         'status' => $status,

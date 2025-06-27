@@ -34,7 +34,10 @@ class TaskController extends ApiControllerBase
         $params = $request->all();
         $collection = $this->taskRepository->all();
         $collection = $this->taskPolicy->authorizeCollection(getUser(), $collection);
-        return apiResponse(data: $collection->toArray(), params: $params);
+        $data = $collection->toArray();
+        $collection = null;
+        datatableDataProcess($data, $params);
+        return apiResponse(data: $data, params: $params);
     }
 
     /**

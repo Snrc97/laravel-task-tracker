@@ -21,7 +21,7 @@ class ProjectController extends ApiControllerBase
         $this->projectRepository = $projectRepository;
         $this->projectPolicy = $projectPolicy;
         $this->model = $projectRepository->getModel();
-        $this->model->load('user', 'tasks');
+
     }
 
     /**
@@ -33,7 +33,7 @@ class ProjectController extends ApiControllerBase
     public function index(Request $request): JsonResponse
     {
         $params = $request->all();
-        $collection = $this->projectRepository->all();
+        $collection = $this->projectRepository->all(['user','tasks']);
         $collection = $this->projectPolicy->authorizeCollection(getUser(), $collection);
         $data = $collection->toArray();
         $collection = null;

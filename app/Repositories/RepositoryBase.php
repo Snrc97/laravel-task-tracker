@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Models\ModelBase;
 use App\Traits\Cacheable;
-
-
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class RepositoryBase implements RepositoryInterface
  * @package App\Repositories
- * @template TModel
+ * @template TModel of ModelBase
  */
 abstract class RepositoryBase
 {
@@ -35,13 +35,14 @@ abstract class RepositoryBase
 
     }
 
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all()
+    public function all($relations = [])
     {
-        return $this->withCache($this->model->getTable(), function ($data) {
-            $data ??= $this->model->all();
+        return $this->withCache($this->model->getTable(), function ($data) use($relations) {
+            $data ??= $this->model->with($relations)->get();
             return $data;
         });
     }
@@ -50,10 +51,10 @@ abstract class RepositoryBase
      * @param int $id
      * @return TModel
      */
-    public function find(int $id)
+    public function find(int $id, $relations = [])
     {
-        return $this->withCache($this->model->getTable().'_'.$id, function ($data) use($id) {
-            $data ??= $this->model->find($id);
+        return $this->withCache($this->model->getTable().'_'.$id, function ($data) use($id, $relations) {
+            $data ??= $this->model->with($relations)->find($id);
             return $data;
         });
     }

@@ -11,11 +11,9 @@ use App\Repositories\Interfaces\ProjectRepositoryInterface;
 class ProjectRepository extends RepositoryBase implements ProjectRepositoryInterface
 {
 
-
     public function __construct()
     {
         $this->model = new ProjectModel();
     }
-
 
 }

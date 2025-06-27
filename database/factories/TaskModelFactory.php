@@ -17,7 +17,7 @@ class TaskModelFactory extends Factory
     public function definition(): array
     {
         return [
-            'project_id' => ProjectModelFactory::new(),
+            'project_id' => 1,
             'title' => fake()->title(),
             'status' => fake()->randomElement (
                 ['todo',

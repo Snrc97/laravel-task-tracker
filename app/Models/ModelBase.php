@@ -9,6 +9,7 @@ class ModelBase extends Model
 {
 
 
+
     public function hasField($fieldName): bool
     {
         $dbName = $this->getConnection()->getDatabaseName();

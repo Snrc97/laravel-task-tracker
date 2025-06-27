@@ -33,7 +33,7 @@ class ProjectModel extends ModelBase
 
     public function user()
     {
-        return $this->belongsTo(UserModel::class, 'user_id');
+        return $this->belongsTo(UserModel::class, 'user_id', 'id');
     }
 
     public function tasks()

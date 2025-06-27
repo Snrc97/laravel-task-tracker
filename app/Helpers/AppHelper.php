@@ -22,8 +22,10 @@ function datatableDataProcess(array &$data, array &$params): void
     if(is_array($data))
     {
 
-        $start = (int)$params['start'] ?? 0;
-        $length = (int)$params['length'] ?? PER_PAGE;
+        $start = $params['start'] ?? 0;
+        $length = $params['length'] ?? PER_PAGE;
+        $start = (int)$start;
+        $length = (int)$length;
 
         $order = $params['order'][0] ?? null;
         if(isset($order)) {

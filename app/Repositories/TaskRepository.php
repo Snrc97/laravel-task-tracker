@@ -11,12 +11,10 @@ use App\Repositories\Interfaces\TaskRepositoryInterface;
 class TaskRepository extends RepositoryBase implements TaskRepositoryInterface
 {
 
-
     public function __construct()
     {
         $this->model = new TaskModel();
 
     }
-
 
 }

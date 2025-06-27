@@ -38,9 +38,11 @@ function datatableDataProcess(array &$data, array &$params): void
                         }
                     }
                 }
+                if(isset($item)) {
+                    $item['select'] = '<input type="checkbox" class="form-check-input" name="id[]" value="'.$item['id'].'">';
+                    $item['actions'] = '';
+                }
 
-                $item['select'] = '<input type="checkbox" class="form-check-input" name="id[]" value="'.$item['id'].'">';
-                $item['actions'] = '';
                 return $item;
             }
         )->values()->toArray();

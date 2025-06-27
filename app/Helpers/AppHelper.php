@@ -25,7 +25,22 @@ function datatableDataProcess(array &$data, array &$params): void
         $start = (int)$params['start'] ?? 0;
         $length = (int)$params['length'] ?? PER_PAGE;
 
-        $data = collect($data)->skip($start)->take($length)->values()->toArray();
+        $data = collect($data)->skip($start)->take($length)->filter(
+            function($item) use ($params) {
+                $search = $params['search']['value'] ?? null;
+                if(isset($search)) {
+                    foreach($item as $key => $value) {
+                        if(is_string($value)) {
+                            if(stripos($value, $search) !== false) {
+                                return $item;
+                            }
+                            return null;
+                        }
+                    }
+                }
+                return $item;
+            }
+        )->values()->toArray();
         $recordsTotal = count($data);
     }
     else if(is_object($data))

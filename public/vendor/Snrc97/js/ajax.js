@@ -98,7 +98,6 @@ function AjaxRequest(options) {
     });
 }
 
-
 $( async () => {
     csrf = await AjaxRequest({
         url: "/sanctum/csrf-cookie",

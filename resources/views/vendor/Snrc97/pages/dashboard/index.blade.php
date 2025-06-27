@@ -26,6 +26,11 @@ $title = "Project Task Tracker - " . __('all.dashboard.title');
                     'href' => url('/web/dashboard/tasks'),
                     'icon' => 'fa fa-tasks fa-stack-1x',
                 ],
+                [
+                    'title' => 'GitHub',
+                    'href' => env('GITHUB_URL', 'https://github.com/Snrc97/Project-Task-Tracker'),
+                    'icon' => 'fa-brands fa-github fa-stack-1x',
+                ],
             ];
         @endphp
         @include('vendor/Snrc97/includes/sidebars/index', ['sidebarItems' => $sidebarItems])

@@ -57,9 +57,8 @@ $id ??= $title."Modal";
     <script type="text/javascript">
         $(()=>{
             $('#{{ $id }}Form').on('submit', function(e) {
-            alert('submit');
             e.preventDefault();
-            handleSubmit(e , '{{ $url }}')
+            handleSubmit(e , '{{ $url }}');
         });
         });
 

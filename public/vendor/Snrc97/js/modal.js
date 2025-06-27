@@ -18,7 +18,7 @@ function CreateModal(modalId) {
     DisplayModal(modalId, null, true);
 }
 
-function EditModal(modalId, row) {
+function EditModal(endpoint,modalId, row) {
     DisplayModal(modalId, (modal)=> {
         const id = row.id;
         $modal = $(modal);

@@ -1,4 +1,10 @@
+
 var table = null;
+
+document.addEventListener('dataUpdated', (event) => {
+    table.ajax.reload( null, false );
+});
+
 function drawDataTable(id, options, customButtons) {
 
     if(options.dataSrc)
@@ -15,6 +21,9 @@ function drawDataTable(id, options, customButtons) {
 
 
     const modalId = id.replace('Datatable', 'Modal');
+
+    const ajax_url = options.ajax;
+
 
     options = {
 
@@ -52,11 +61,13 @@ function drawDataTable(id, options, customButtons) {
                 orderable: false,
                 defaultContent: ``,
                 render: function (data, type, row, meta) {
+                    const endpoint = ajax_url + '/' + row.id;
                     const row_json = JSON.stringify(row);
+
                     return `
                     <div class="btn-group px-2">
-                        <button class="dt-row-btn btn btn-warning" onclick='EditModal("${modalId}", ${row_json})'><i class="fa fa-pencil mr-1"></i></button>
-                        <button class="dt-row-btn btn btn-danger" onclick='DeleteModal("${modalId}", ${row_json})'><i class="fa fa-trash mr-1"></i></button>
+                        <button class="dt-row-btn btn btn-warning" onclick='EditModal("${endpoint}", "${modalId}", ${row_json})'><i class="fa fa-pencil mr-1"></i></button>
+                        <button class="dt-row-btn btn btn-danger" onclick='DataTableRowDelete("${endpoint}")'><i class="fa fa-trash mr-1"></i></button>
                     </div>
                     `;
                 },
@@ -91,6 +102,12 @@ function drawDataTable(id, options, customButtons) {
     table = $('#' + id).DataTable(options);
 
 
+}
+
+
+async function DataTableRowDelete(endpoint) {
+    const res = await AjaxRequest({ url: endpoint, type: "DELETE"});
+    document.dispatchEvent(new CustomEvent('dataUpdated'));
 }
 
 // Usage

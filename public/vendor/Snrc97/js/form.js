@@ -129,5 +129,6 @@ async function handleSubmit(e,url) {
         }
     }
     await AjaxRequest(options);
+    document.dispatchEvent(new CustomEvent('dataUpdated'));
 }
 

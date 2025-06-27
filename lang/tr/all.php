@@ -9,6 +9,10 @@ return [
     'add' => 'Ekle',
     'select' => 'Seç',
 
+    'todo' => 'Yapılacak',
+    'in_progress' => 'Yapılıyor',
+    'done' => 'Yapıldı',
+
     'success' => 'Başarılı',
     'error' => 'Hata',
     'unknown_error' => 'Bilinmeyen Hata',

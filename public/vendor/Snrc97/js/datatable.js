@@ -14,9 +14,11 @@ function drawDataTable(id, options, customButtons) {
 
 
 
+    const modalId = id.replace('Datatable', 'Modal');
 
+    options = {
 
-    var defaultOptions = {
+        ...options,
         responsive: true,
         serverSide: true,
         processing: true,
@@ -25,35 +27,49 @@ function drawDataTable(id, options, customButtons) {
         searching: true,
         ordering: true,
         info: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
         select: {
             style: 'multi',
             selector: 'td:first-child'
         },
 
 
-
-
-    };
-
-
-    options = {
-        ...options,
-
         columnDefs: [
             {
                 targets: '_all',
                 className: "all dt-center",
             },
-
+            {
+                targets: [0],
+                orderable: false,
+                defaultContent: '<input type="checkbox" class="form-check-input" />',
+            },
+            {
+                targets: [options.columns.length-1],
+                orderable: false,
+                defaultContent: ``,
+                render: function (data, type, row, meta) {
+                    const row_id = row.id;
+                    return `
+                    <div class="btn-group px-2">
+                        <button class="dt-row-btn btn btn-warning" onclick="EditModal('${modalId}', ${row_id})"><i class="fa fa-pencil mr-1"></i></button>
+                        <button class="dt-row-btn btn btn-danger" onclick="DeleteModal('${modalId}', ${row_id})"><i class="fa fa-trash mr-1"></i></button>
+                    </div>
+                    `;
+                },
+            }
         ],
-    }
 
 
-    var finalOptions = $.extend(true, {}, defaultOptions, options);
-    if(finalOptions.ajax)
+    };
+
+    if(options.ajax)
     {
-        finalOptions.ajax = {
-            url: finalOptions.ajax,
+        options.ajax = {
+            url: options.ajax,
             type: 'GET',
             dataSrc: 'data',
             beforeSend : function (xhr) {
@@ -63,18 +79,17 @@ function drawDataTable(id, options, customButtons) {
             },
             complete: function (xhr) {
                 const response = xhr.responseJSON;
-                console.log(response);
             },
             error: function (xhr) {
-                console.log(xhr.message);
+                console.error(xhr.message);
             },
 
         }
     }
 
 
-    table = $('#' + id).DataTable(finalOptions);
-    // table.columns.adjust().draw();
+    table = $('#' + id).DataTable(options);
+
 
 }
 

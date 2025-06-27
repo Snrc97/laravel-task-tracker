@@ -33,10 +33,6 @@ class ProjectController extends ApiControllerBase
     public function index(Request $request): JsonResponse
     {
         $params = $request->all();
-        $params = [
-            ...$params,
-            'draw' => $request->draw ?? 1
-        ];
         $collection = $this->projectRepository->all();
         $collection = $this->projectPolicy->authorizeCollection(getUser(), $collection);
         return apiResponse(data: $collection->toArray(), params: $params);
@@ -52,7 +48,10 @@ class ProjectController extends ApiControllerBase
     {
         $validatedData = $request->validate(ProjectModel::rules());
         $model = $this->projectRepository->create($validatedData);
-        $this->projectPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->projectPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         return apiResponse(data: $model, status: 201);
     }
 
@@ -65,11 +64,12 @@ class ProjectController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-        $params = [
-            'draw' => $request->draw ?? 1
-        ];
+        $params = $request->all();
         $model = $this->projectRepository->find($id);
-        $this->projectPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->projectPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         return apiResponse(data: $model, params: $params);
     }
 
@@ -87,7 +87,10 @@ class ProjectController extends ApiControllerBase
          * @var ModelBase $model
          */
         $model = $this->projectRepository->find($id);
-        $this->projectPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->projectPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         $model = $model->update($validatedData);
         return apiResponse(data: $model);
     }
@@ -102,7 +105,10 @@ class ProjectController extends ApiControllerBase
     public function destroy(Request $request, $id): JsonResponse
     {
         $model = $this->projectRepository->find($id);
-        $this->projectPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->projectPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         $data = $this->projectRepository->delete($id);
         return apiResponse(data: $data, status: 204);
     }

@@ -49,11 +49,13 @@ function apiResponse($data = [], $status = 200, $message = null, array $params =
         $recordsTotal = 1;
     }
 
-
+    $params['draw'] ??= "1";
+    $params['draw'] = (int)$params['draw'];
+    $params['draw'] += 1;
 
     $data = [
         'data' => $data,
-        'draw' => $params['draw'] ?? 0,
+        'draw' => $params['draw'],
         'recordsTotal' => $recordsTotal,
         'recordsFiltered' => $recordsFiltered,
         'message' => $message,

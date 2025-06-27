@@ -32,10 +32,6 @@ class TaskController extends ApiControllerBase
     public function index(Request $request): JsonResponse
     {
         $params = $request->all();
-        $params = [
-            ...$params,
-            'draw' => $request->draw ?? 1
-        ];
         $collection = $this->taskRepository->all();
         $collection = $this->taskPolicy->authorizeCollection(getUser(), $collection);
         return apiResponse(data: $collection->toArray(), params: $params);
@@ -51,8 +47,10 @@ class TaskController extends ApiControllerBase
     {
         $validatedData = $request->validate(TaskModel::rules());
         $model = $this->taskRepository->create($validatedData);
-        $this->taskPolicy->authorize(getUser(), $model);
-
+        $isAuthorized = $this->taskPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         return apiResponse(data: $model, status: 201);
     }
 
@@ -65,11 +63,12 @@ class TaskController extends ApiControllerBase
      */
     public function show(Request $request, $id): JsonResponse
     {
-        $params = [
-            'draw' => $request->draw ?? 1
-        ];
+        $params = $request->all();
         $model = $this->taskRepository->find($id);
-        $this->taskPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->taskPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         return apiResponse(data: $model, params: $params);
     }
 
@@ -84,7 +83,10 @@ class TaskController extends ApiControllerBase
     {
         $validatedData = $request->validate(TaskModel::rules());
         $model = $this->taskRepository->find($id);
-        $this->taskPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->taskPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
         $model = $model->update($validatedData);
         return apiResponse(data: $model);
     }
@@ -99,7 +101,10 @@ class TaskController extends ApiControllerBase
     public function destroy(Request $request, $id): JsonResponse
     {
         $model = $this->taskRepository->find($id);
-        $this->taskPolicy->authorize(getUser(), $model);
+        $isAuthorized = $this->taskPolicy->authorize(getUser(), $model);
+        if(!$isAuthorized) {
+            return apiResponse(data: null, status: 403);
+        }
 
         $data = $this->taskRepository->delete($id);
         return apiResponse(data: $data, status: 204);

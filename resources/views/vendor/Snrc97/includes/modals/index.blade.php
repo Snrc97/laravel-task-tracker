@@ -61,7 +61,10 @@ $id ??= $title."Modal";
                 let url = '{{ $url }}';
 
             e.preventDefault();
-            handleSubmitModal(e.target , url);
+            handleSubmitForm(e.target , url, () => {
+                DisplayModal('{{ $id }}', null, false);
+            });
+
         });
         });
 

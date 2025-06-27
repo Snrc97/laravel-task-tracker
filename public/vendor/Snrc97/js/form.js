@@ -113,15 +113,15 @@ async function handleLogoutFormSubmit(e) {
 }
 
 
-async function handleSubmitModal(modal,url) {
+async function handleSubmitForm(form,url, completedCallback = null) {
 
-    const id = $(modal).find('#id').val();
+    const id = $(form).find('#id').val();
     if(id != "") {
         url = url + '/' +id;
     }
     const type = id == "" ? "POST" : "PUT";
 
-    const formData = new FormData(modal);
+    const formData = new FormData(form);
     const data = formDataToData(formData);
     let options = {
         url: url,
@@ -131,6 +131,10 @@ async function handleSubmitModal(modal,url) {
             alert(xhr.message);
             setTimeout(() => {
                 table?.ajax.reload();
+                if(completedCallback)
+                {
+                    completedCallback();
+                }
             }, 1000);
         }
     }

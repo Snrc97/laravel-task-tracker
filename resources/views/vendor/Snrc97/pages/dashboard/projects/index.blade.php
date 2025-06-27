@@ -10,10 +10,12 @@
                 'title' => 'ID',
                 'data' => 'id',
             ],
+            /*
             [
                 'title' => __('all.users.singular'),
                 'data' => 'user_id',
             ],
+            */
             [
                 'title' => __('all.name'),
                 'data' => 'name',

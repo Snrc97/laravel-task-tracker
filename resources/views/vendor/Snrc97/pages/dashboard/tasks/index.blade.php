@@ -34,6 +34,7 @@
         ];
 
         $projects = App\Models\ProjectModel::pluck('name', 'id')->toArray();
+        $status = App\Models\TaskModel::getFieldColumnEnumValues('status');
 
 
         $inputs = [
@@ -47,7 +48,9 @@
             [
                 'title' => __('all.status'),
                 'name' => 'status',
-                'elementType' => 'switch',
+                // 'elementType' => 'switch',
+                'elementType' => 'select',
+                'options' => $status
 
             ],
 

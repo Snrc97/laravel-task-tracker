@@ -32,7 +32,7 @@ class TaskController extends ApiControllerBase
     public function index(Request $request): JsonResponse
     {
         $params = $request->all();
-        $collection = $this->model->all(['project', 'project.user']);
+        $collection = $this->taskRepository->all(['project', 'project.user']);
         $collection = $this->taskPolicy->authorizeCollection(getUser(), $collection);
         $collection = collect($collection);
         $data = $collection->toArray();

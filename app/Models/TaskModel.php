@@ -37,7 +37,7 @@ class TaskModel extends ModelBase
 
     public function project()
     {
-        return $this->belongsTo(ProjectModel::class, 'project_id');
+        return $this->belongsTo(ProjectModel::class, 'project_id', 'id');
     }
 
 }

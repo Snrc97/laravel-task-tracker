@@ -15,6 +15,7 @@ class TaskRepository extends RepositoryBase implements TaskRepositoryInterface
     {
         $this->model = new TaskModel();
 
+
     }
 
 }

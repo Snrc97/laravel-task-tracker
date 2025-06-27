@@ -113,13 +113,19 @@ async function handleLogoutFormSubmit(e) {
 }
 
 
-async function handleSubmit(e,url) {
+async function handleSubmitModal(modal,url) {
 
-    const formData = new FormData(e.target);
+    const id = $(modal).find('#id').val();
+    if(id != "") {
+        url = url + '/' +id;
+    }
+    const type = id == "" ? "POST" : "PUT";
+
+    const formData = new FormData(modal);
     const data = formDataToData(formData);
     let options = {
         url: url,
-        type: 'POST',
+        type: type,
         data: data,
         successCallback: (xhr) => {
             alert(xhr.message);

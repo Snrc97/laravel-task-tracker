@@ -23,11 +23,8 @@ Front-end yazılımları
 Back-end yazılımları
 + PHP; Laravel
 
-Yazılım Mimarisi
-+ MVC
-
-
 Design patterns
++ MVC
 + Repository
 + Dependency Injection
 
@@ -63,12 +60,14 @@ Routing
                 /login
                 /projects
                 /tasks
+  
 + /api
       /auth
             /login
             /register
             /logout
-
+  
++ /api
       /dashboard
                 /projects
                 /tasks
@@ -94,4 +93,4 @@ Temiz Kod (Clean Coding)
 Diğer özellikler:
 * Kolayca farklı yabancı dillere çevirebilme
 * İyi bir başlangıç için hazır front-end ve back-end helper methodları
-* Modüler .blade görünüm şablonları, örneğin: datatable, modal, sidebar
+* Modüler, Yeniden kullanılabilir .blade görünüm şablonları, örneğin: datatable, modal, sidebar
